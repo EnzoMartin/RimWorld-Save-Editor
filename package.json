@@ -1,0 +1,21 @@
+{
+  "name": "rimworld-save-editor",
+  "version": "1.0.0",
+  "description": "Basic RimWorld save editor",
+  "repository": "git@github.com:EnzoMartin/RimWorld-Save-Editor.git",
+  "license": "MIT",
+  "author": "Enzo Martin <enzo.r.martin@gmail.com>",
+  "contributors": [
+    "Enzo Martin <enzo.r.martin@gmail.com>"
+  ],
+  "engines": {
+    "node": ">4"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "xml2js": "^0.4.16"
+  }
+}
