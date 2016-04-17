@@ -38,9 +38,8 @@ fs.readFile(savePath, (err, file) => {
                                 break;
                             case 'Pawn':
                                 if(
-                                    thing.faction.indexOf(Game.playerFaction) !== -1 &&
                                     thing.def.indexOf('Human') !== -1 &&
-                                    thing.kindDef.indexOf('Colonist') !== -1
+                                    thing.faction.indexOf(Game.playerFaction) !== -1
                                 ){
                                     const name = thing.name[0];
                                     pawnsModified.push(name.first + ' "' + name.nick + '" ' + name.last);

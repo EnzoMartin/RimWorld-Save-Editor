@@ -1,6 +1,6 @@
 {
   "name": "rimworld-save-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Basic RimWorld save editor",
   "repository": "git@github.com:EnzoMartin/RimWorld-Save-Editor.git",
   "license": "MIT",
