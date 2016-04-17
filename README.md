@@ -58,4 +58,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[local]:config/example.local.js
+[config]:config/example.local.js
+[Node Gyp setup guide]:https://github.com/TooTallNate/node-gyp#installation
