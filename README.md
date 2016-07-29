@@ -1,20 +1,23 @@
 RimWorld Save Editor
 =======================
 
-RimWorld save game editor, more features including a UI to come later.
+RimWorld save game editor
 
-Current features:
+##Features
 
-* Set Colonist skill levels
-* Remove filth
-* Set colonist equipped items (apparel and weapons) to 100 health and `Superior` quality
+* Set colonist skill levels
+* Set colonist equipped items (apparel and weapons) health and quality
+* Set item and art health/quality
+* Mortally wound enemy faction pawns
+* Mortally wound friendly caravan animals
+
+More to come
 
 ##Install
 
 * Download and install the latest [NodeJS][nodejs]
 * Clone the repo
 * Follow the [Node Gyp setup guide]
-* Run `npm install node-gyp -g`
 * Run `npm install` from the repo base directory
 * Follow the `Usage` instructions below to configure the options
 * Run `node app.js`
@@ -28,9 +31,9 @@ Current features:
 | saveName | | The save file name **REQUIRED** |
 | playerFaction | Faction_9 | Player's faction ID | 
 | skillLevel | 20 | Skill level to set colonists to |
-| healthLevel | 100 | Health to set items to |
-| qualityLevel | Superior | Item quality to set for equipped items | 
-| modifiedName | Edited | String to prefix new save with to prevent overwriting, you can set to an empty string to overwrite the file (not recommended) |
+| healthLevel | 1000 | Health to set items to |
+| qualityLevel | Masterwork | Item quality to set for equipped items | 
+| modifiedNamePrefix | Edited | String to prefix new save with to prevent overwriting, you can set to an empty string to overwrite the file (not recommended) |
 
 Copy the example [config] file in `/config/example.local.js` to `/config/local.js` and edit the settings `saveDir` and `saveName`
 
