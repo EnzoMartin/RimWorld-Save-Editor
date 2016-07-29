@@ -33,7 +33,9 @@ for (var name in networks) {
 class Game {
     constructor(config) {
         this.playerFaction = config.playerFaction || 'Faction_9';
-        this.skillLevel = typeof config.skillLevel !== 'undefined' ? config.skillLevel : 20;
+        this.playerFactionId = this.playerFaction.split('_')[1];
+        this.skillLevel = typeof config.skillLevel === 'undefined' ? 20 : config.skillLevel;
+        this.supportedVersion = pjson.engines.game;
         
         if(this.skillLevel > 20){
             console.warn('Skill level cannot be above 20, setting it to 20 instead');
@@ -41,8 +43,8 @@ class Game {
         }
         
         //TODO: Read item health definitions?
-        this.healthLevel = typeof config.healthLevel !== 'undefined' ? config.healthLevel : 100;
-        this.qualityLevel = config.qualityLevel || 'Superior';
+        this.healthLevel = typeof config.healthLevel === 'undefined' ? 1000 : config.healthLevel;
+        this.qualityLevel = config.qualityLevel || 'Masterwork';
         
         // TODO: Read from game config file, prompt user for save location, check if running inside the game folder
         this.saveDir = config.saveDir;
