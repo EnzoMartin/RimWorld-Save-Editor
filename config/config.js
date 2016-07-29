@@ -28,26 +28,6 @@ var configs = {
 };
 
 /**
- * Traverse local config file
- * @param {object} config
- * @param {object} localConfig
- */
-function configTraverse(config,localConfig) {
-    var keys = Object.keys(localConfig);
-    keys.forEach((key) => {
-        var value = localConfig[key];
-        if (typeof value === 'object') {
-            if (typeof config[key] === 'undefined') {
-                config[key] = {};
-            }
-            configTraverse(config[key],value);
-        } else {
-            config[key] = value;
-        }
-    });
-}
-
-/**
  * Load up config for specified environment
  * @param {string} environment
  * @returns {Configuration}
@@ -63,7 +43,7 @@ module.exports.initialize = (environment) => {
     if (config.isDev) {
         // Load the config overrides for development environment
         try {
-            configTraverse(config,require('./local'));
+            config = Object.assign(config,require('./local'));
         } catch (err) {
             // Ignore
         }
