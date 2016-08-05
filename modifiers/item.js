@@ -5,7 +5,7 @@
  * @param {String|Boolean} quality
  * @returns {*}
  */
-module.exports = (thing,health,quality) => {
+module.exports = (thing,health,quality) =>{
     if(health !== false && thing.health){
         thing.health = [health];
     }

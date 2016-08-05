@@ -1,6 +1,6 @@
 {
   "name": "rimworld-save-editor",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "RimWorld save editor",
   "repository": {
     "type": "git",
@@ -18,9 +18,19 @@
   },
   "main": "app.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint lib/**/*.js test/**/*.js *.js",
+    "dev": "node app.js | bunyan -o short",
     "start": "node app.js"
   },
   "dependencies": {
+    "bunyan": "^1.8.1",
     "xml2js": "^0.4.16"
+  },
+  "optionalDependencies": {
+    "azure-storage": "^1.2.0"
+  },
+  "devDependencies": {
+    "enzo-codestyle": "^1.0.0",
+    "eslint": "^3.2.2"
   }
 }
