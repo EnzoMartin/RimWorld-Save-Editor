@@ -32,7 +32,7 @@ var configs = {
  * @returns {Configuration}
  * @returns {Configuration.logger}
  */
-module.exports.initialize = () =>{
+const initialize = () =>{
     const environment = process.env.SERVER_ENV || process.env.NODE_ENV || 'development';
     var config = configs[environment];
 
@@ -75,3 +75,5 @@ module.exports.initialize = () =>{
     module.exports = configuration;
     return configuration;
 };
+
+module.exports = initialize();

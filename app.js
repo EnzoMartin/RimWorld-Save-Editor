@@ -2,7 +2,7 @@
 
 const processTime = process.hrtime();
 const path = require('path');
-const config = require('./config').initialize();
+const config = require('./config');
 const logger = config.logger.child({file:__filename});
 
 const Storage = require('./lib/storage');
