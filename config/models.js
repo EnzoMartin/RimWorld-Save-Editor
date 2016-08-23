@@ -72,7 +72,6 @@ class Game {
  * @property {Boolean} woundHostilePawns
  * @property {Boolean} caravanDisaster
  * @property {Boolean} upgradeArt
- * @property {Boolean} empowerPawns
  * @property {Boolean} upgradePawnSkills
  * @property {Boolean} upgradePawnEquipment
  * @property {Boolean} upgradePawnApparel
@@ -89,7 +88,6 @@ class QuickActions {
         this.caravanDisaster = typeof config.woundCaravan === 'boolean' ? config.woundCaravan : true;
 
         // Colony
-        this.empowerPawns = typeof config.empowerPawns === 'boolean' ? config.empowerPawns : true;
         this.upgradePawnSkills = typeof config.upgradePawnSkills === 'boolean' ? config.upgradePawnSkills : true;
         this.upgradePawnEquipment = typeof config.upgradePawnEquipment === 'boolean' ? config.upgradePawnEquipment : true;
         this.upgradePawnApparel = typeof config.upgradePawnApparel === 'boolean' ? config.upgradePawnApparel : true;
