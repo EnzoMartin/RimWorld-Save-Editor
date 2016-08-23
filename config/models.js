@@ -28,6 +28,19 @@ for(var name in networks){
     }
 }
 
+/**
+ * Game
+ * @property {String} playerFaction
+ * @property {String} playerFactionId
+ * @property {String|Number} skillLevel
+ * @property {String|Number} supportedVersion
+ * @property {String|Number} healthLevel
+ * @property {String} qualityLevel
+ * @property {String} saveDir
+ * @property {String} saveName
+ * @property {String|Boolean} saveId
+ * @property {String} modifiedName
+ */
 class Game {
     constructor(config){
         this.playerFaction = config.playerFaction || 'Faction_9';
@@ -49,20 +62,73 @@ class Game {
 
         //TODO: Prompt user for save to open
         this.saveName = config.saveName;
-        this.modifiedName = (typeof config.modifiedNamePrefix === 'undefined' ? 'Edited' : config.modifiedNamePrefix) + this.saveName;
-
-        // Used for storage retrieval
         this.saveId = config.saveId || false;
+        this.modifiedName = (typeof config.modifiedNamePrefix === 'undefined' ? 'Edited' : config.modifiedNamePrefix) + this.saveName;
     }
 }
 
+/**
+ * Quick Actions
+ * @property {Boolean} woundHostilePawns
+ * @property {Boolean} caravanDisaster
+ * @property {Boolean} upgradeArt
+ * @property {Boolean} empowerPawns
+ * @property {Boolean} upgradePawnSkills
+ * @property {Boolean} upgradePawnEquipment
+ * @property {Boolean} upgradePawnApparel
+ * @property {Boolean} upgradeItems
+ * @property {Boolean} setPlayerPeace
+ * @property {Boolean} setPlayerWar
+ * @property {Boolean} setWorldPeace
+ * @property {Boolean} setWorldWar
+ */
+class QuickActions {
+    constructor(config){
+        // Events
+        this.woundHostilePawns = typeof config.woundHostilePawns === 'boolean' ? config.woundHostilePawns : true;
+        this.caravanDisaster = typeof config.woundCaravan === 'boolean' ? config.woundCaravan : true;
+
+        // Colony
+        this.empowerPawns = typeof config.empowerPawns === 'boolean' ? config.empowerPawns : true;
+        this.upgradePawnSkills = typeof config.upgradePawnSkills === 'boolean' ? config.upgradePawnSkills : true;
+        this.upgradePawnEquipment = typeof config.upgradePawnEquipment === 'boolean' ? config.upgradePawnEquipment : true;
+        this.upgradePawnApparel = typeof config.upgradePawnApparel === 'boolean' ? config.upgradePawnApparel : true;
+
+        // Things
+        this.upgradeItems = typeof config.upgradeItems === 'boolean' ? config.upgradeItems : true;
+        this.upgradeArt = typeof config.upgradeArt === 'boolean' ? config.upgradeArt : true;
+
+        // Factions
+        this.setPlayerPeace = config.setPlayerPeace || false;
+        this.setPlayerWar = config.setPlayerWar || false;
+        this.setWorldPeace = config.setWorldPeace || false;
+        this.setWorldWar = config.setWorldWar || false;
+
+        if(this.setWorldPeace && this.setWorldWar){
+            console.warn('Ignoring world peace due to world war set to `true`');
+        }
+
+        if(this.setPlayerPeace && this.setPlayerWar){
+            console.warn('Ignoring player peace due to player war set to `true`');
+        }
+    }
+}
+
+/**
+ * Storage
+ * @property {String} connection
+ */
 class Storage {
     constructor(config){
-        this.container = config.container || 'saves';
         this.connection = config.connection || process.env.STORAGE_CONNECTION;
     }
 }
 
+/**
+ * @param {Storage} Storage
+ * @param {QuickActions} QuickActions
+ * @param {Game} Game
+ */
 class Configuration {
     setBaseConfig(config){
         this.version = pjson.version;
@@ -93,11 +159,13 @@ class Configuration {
         }
 
         this.Game = new Game(config.gameConfig);
+        this.QuickActions = new QuickActions(config.quickActionsConfig || {});
     }
 }
 
 module.exports = {
     Configuration,
+    QuickActions,
     Storage,
     Game
 };

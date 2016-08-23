@@ -30,7 +30,7 @@
     "azure-storage": "^1.2.0"
   },
   "devDependencies": {
-    "enzo-codestyle": "^1.0.0",
+    "enzo-codestyle": "^2.0.0",
     "eslint": "^3.2.2"
   }
 }

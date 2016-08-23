@@ -1,5 +1,5 @@
 /* eslint no-process-env: 0 global-require: 0*/
-const Models = require('./models');
+const Models = require('./config/models');
 const bunyan = require('bunyan');
 
 // Environment specific configs
@@ -43,7 +43,7 @@ module.exports.initialize = () =>{
     if(config.isDev){
         // Load the config overrides for development environment
         try {
-            config = Object.assign(config,require('./local'));
+            config = Object.assign(config,require('./config/local'));
         } catch (err){
             // Ignore
         }

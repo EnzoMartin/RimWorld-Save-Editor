@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "6"
+
+install:
+  - "npm install"
+env:
+  - ACTION=lint CXX=g++-4.8
+  #- ACTION=test CXX=g++-4.8
+
+script: "npm run $ACTION"
+notifications:
+  email:
+    on_failure: change
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
