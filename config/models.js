@@ -85,7 +85,7 @@ class QuickActions {
     constructor(config){
         // Events
         this.woundHostilePawns = typeof config.woundHostilePawns === 'boolean' ? config.woundHostilePawns : true;
-        this.caravanDisaster = typeof config.woundCaravan === 'boolean' ? config.woundCaravan : true;
+        this.caravanDisaster = typeof config.caravanDisaster === 'boolean' ? config.caravanDisaster : true;
 
         // Colony
         this.upgradePawnSkills = typeof config.upgradePawnSkills === 'boolean' ? config.upgradePawnSkills : true;
