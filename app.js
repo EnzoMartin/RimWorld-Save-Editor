@@ -20,7 +20,7 @@ function processSave(err,result){
         logger.error(err);
         throw new Error(err);
     } else {
-        logger.info('Finished XML to JS conversion');
+        logger.info('Finished loading save data');
 
         const gameMeta = result.savegame.meta[0];
         const gameSave = result.savegame.game[0];
@@ -29,14 +29,14 @@ function processSave(err,result){
             throw new Error('Unsupported game save version');
         } else {
             const result = Actions.doQuickActions(gameSave);
-            logger.info('Finished modifying, saving file');
+            logger.info('Finished modifying, writing save file');
             Local.save(writePath,XML.compile(result.save),(err) =>{
                 if(err){
-                    logger.error('Failed to save file',err);
+                    logger.error('Failed to write save file',err);
                     throw new Error(err);
                 } else {
                     const elapsed = process.hrtime(processTime);
-                    logger.info(`File saved as "${Game.modifiedName}", ready to play!`);
+                    logger.info(`Save written as "${Game.modifiedName}", ready to play!`);
                     logger.info(`Process took ${(elapsed[0] * 1000 + elapsed[1] / 1000000)}ms`);
                     result.modified.forEach((item) =>{
                         logger.info(`${item.name} modified:`,item.modified);
@@ -52,7 +52,7 @@ function processXml(err,file){
         logger.error(err);
         throw new Error(err);
     } else {
-        logger.info('Converting XML to JS');
+        logger.info('Loading save data');
         XML.parse(file,processSave);
     }
 }
