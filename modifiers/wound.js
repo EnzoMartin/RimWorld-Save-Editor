@@ -94,14 +94,6 @@ module.exports = {
             options
         );
 
-        // Need to convert to having each value in an array
-        /*
-        options = Object.keys(options).reduce((opts,key) =>{
-            opts[key] = [opts[key]];
-            return opts;
-        },{});
-        */
-
         pawn = addHediff(pawn,injury);
         return pawn;
     }
