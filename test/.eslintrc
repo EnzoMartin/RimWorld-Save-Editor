@@ -1,0 +1,18 @@
+{
+  "extends": "../.eslintrc",
+  "rules": {
+    "max-nested-callbacks": [ 2, 3 ],
+    "global-require": 0,
+    "no-process-env": 0
+  },
+  "env": {
+    "mocha": true
+  },
+    "globals": {
+        "nock": true,
+        "describe": true,
+        "sinon": true,
+        "expect": true,
+        "proxyquire": true
+    }
+}

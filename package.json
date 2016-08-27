@@ -19,6 +19,8 @@
   "main": "app.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib/**/*.js test/**/*.js *.js",
+    "test": "cross-env NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- --full-trace",
+    "test:watch": "cross-env NODE_ENV=test node_modules/mocha/bin/_mocha --watch --full-trace",
     "dev": "node app.js | bunyan -o short",
     "start": "node app.js"
   },
@@ -30,7 +32,14 @@
     "azure-storage": "^1.2.0"
   },
   "devDependencies": {
+    "cross-env": "^2.0.0",
     "enzo-codestyle": "^2.0.0",
-    "eslint": "^3.2.2"
+    "eslint": "^3.2.2",
+    "expect": "^1.20.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "nock": "^8.0.0",
+    "proxyquire": "^1.7.10",
+    "sinon": "^1.17.5"
   }
 }

@@ -11,6 +11,7 @@ var configs = {
     },
     test:{
         isDev:false,
+        isTest:true,
         isProd:false,
         port:process.env.PORT || 8000
     },
@@ -33,7 +34,7 @@ var configs = {
  * @returns {Configuration.logger}
  */
 const initialize = () =>{
-    const environment = process.env.SERVER_ENV || process.env.NODE_ENV || 'development';
+    const environment = process.env.NODE_ENV || process.env.SERVER_ENV || 'development';
     var config = configs[environment];
 
     if(!config){
@@ -57,6 +58,7 @@ const initialize = () =>{
         environment: config.env,
         ip: config.ip,
         src: config.isDev,
+        level: config.isTest ? bunyan.FATAL + 1 : 'info',
         version: configuration.version,
         streams: config.isDev ? '' : [
             {
@@ -69,6 +71,8 @@ const initialize = () =>{
             }
         ]
     });
+
+    console.log(config.isTest);
 
     configuration.logger.info(`Initialized config for environment "${environment}"`);
 

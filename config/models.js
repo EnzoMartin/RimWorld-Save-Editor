@@ -135,6 +135,7 @@ class Configuration {
         this.env = config.env;
         this.port = config.port || process.env.PORT || 3000;
         this.isDev = typeof config.isDev === 'boolean' ? config.isDev : true;
+        this.isTest = config.isTest || false;
         this.isProd = typeof config.isProd === 'boolean' ? config.isProd : false;
         this.useStorage = typeof config.useStorage === 'boolean' ? config.useStorage : false;
     }
@@ -143,6 +144,16 @@ class Configuration {
         this.setBaseConfig(config);
         this.Storage = false;
 
+        if(this.isTest){
+            // TODO: Remove this when below TODO is done
+            config.gameConfig = {
+                // eslint-disable-next-line global-require
+                saveDir: require('path').join(__dirname,'../test/mocks'),
+                saveName: 'Test.rws'
+            };
+        }
+
+        // TODO: Support CLI/API usage
         if(this.useStorage){
             this.Storage = new Storage(config.storageConfig);
             if(!this.Storage.connection){
