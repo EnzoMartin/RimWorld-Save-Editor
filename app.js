@@ -29,8 +29,19 @@ function processSave(err,result){
             throw new Error('Unsupported game save version');
         } else {
             const result = Actions.doQuickActions(gameSave);
+            const editedSave = {
+                savegame:{
+                    meta: [
+                        gameMeta
+                    ],
+                    game: [
+                        result.save
+                    ]
+                }
+            };
+
             logger.info('Finished modifying, writing save file');
-            Local.save(writePath,XML.compile(result.save),(err) =>{
+            Local.save(writePath,XML.compile(editedSave),(err) =>{
                 if(err){
                     logger.error('Failed to write save file',err);
                     throw new Error(err);

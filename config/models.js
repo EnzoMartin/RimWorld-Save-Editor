@@ -31,7 +31,7 @@ for(var name in networks){
 /**
  * Game
  * @property {String} playerFaction
- * @property {String} playerFactionId
+ * @property {Number} playerFactionId
  * @property {String|Number} skillLevel
  * @property {String|Number} supportedVersion
  * @property {String|Number} healthLevel
@@ -44,7 +44,7 @@ for(var name in networks){
 class Game {
     constructor(config){
         this.playerFaction = config.playerFaction || 'Faction_9';
-        this.playerFactionId = this.playerFaction.split('_')[1];
+        this.playerFactionId = parseInt(this.playerFaction.split('_')[1],10);
         this.skillLevel = typeof config.skillLevel === 'undefined' ? 20 : config.skillLevel;
         this.supportedVersion = pjson.engines.game;
 
