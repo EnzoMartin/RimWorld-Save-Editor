@@ -6,7 +6,7 @@ install:
   - "npm install"
 env:
   - ACTION=lint CXX=g++-4.8
-  #- ACTION=test CXX=g++-4.8
+  - ACTION=test CXX=g++-4.8
 
 script: "npm run $ACTION"
 notifications:
