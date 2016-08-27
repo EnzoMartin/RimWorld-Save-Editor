@@ -25,9 +25,7 @@ function processSave(err,result){
         const gameMeta = result.savegame.meta[0];
         const gameSave = result.savegame.game[0];
 
-        if(Save.verifyVersion(gameMeta)){
-            throw new Error('Unsupported game save version');
-        } else {
+        if(Save.isSupported(gameMeta)){
             const result = Actions.doQuickActions(gameSave);
             const editedSave = {
                 savegame:{
@@ -54,6 +52,8 @@ function processSave(err,result){
                     });
                 }
             });
+        } else {
+            throw new Error('Unsupported game save version');
         }
     }
 }

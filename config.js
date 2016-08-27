@@ -72,8 +72,6 @@ const initialize = () =>{
         ]
     });
 
-    console.log(config.isTest);
-
     configuration.logger.info(`Initialized config for environment "${environment}"`);
 
     module.exports = configuration;
