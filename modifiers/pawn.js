@@ -9,9 +9,9 @@ module.exports = {
      */
     setSkills:(thing,level) =>{
         if(thing.skills && thing.skills[0].skills){
-            const skills = thing.skills[0].skills;
+            const skills = thing.skills[0].skills[0].li;
 
-            thing.skills[0].skills = skills.map((item) =>{
+            thing.skills[0].skills[0].li = skills.map((item) =>{
                 item.level = [level];
                 delete item.xpSinceLastLevel;
 

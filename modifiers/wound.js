@@ -1,19 +1,25 @@
-// Base health tracker object setup
-const healthTracker = [{
-    hediffSet:[{
-        hediffs:[{
-            li:[]
-        }]
-    }]
-}];
-
 /**
  * Ensure the health tracker and related properties exist
  * @param {Object} pawn
  * @returns {*}
  */
 function verifyPawnHealthProperty(pawn){
-    pawn.healthTracker = Object.assign(healthTracker,pawn.healthTracker);
+    if(!pawn.healthTracker){
+        pawn.healthTracker = [];
+    }
+
+    if(!pawn.healthTracker[0].hediffSet){
+        pawn.healthTracker[0] = {hediffSet:[]};
+    }
+
+    if(!pawn.healthTracker[0].hediffSet[0].hediffs){
+        pawn.healthTracker[0].hediffSet[0] = {hediffs:[{}]};
+    }
+
+    if(!pawn.healthTracker[0].hediffSet[0].hediffs[0].li){
+        pawn.healthTracker[0].hediffSet[0].hediffs[0] = {li:[]};
+    }
+
     return pawn;
 }
 
@@ -36,9 +42,7 @@ module.exports = {
      * @returns {*}
      */
     addBloodLoss(pawn,severity){
-        pawn = this.addBodyInjury(pawn,'BloodLoss',{
-            severity
-        });
+        pawn = this.addBodyInjury(pawn,'BloodLoss',severity ? {severity} : {});
         return pawn;
     },
     /**
@@ -65,14 +69,30 @@ module.exports = {
             className = 'HediffWithComps';
         }
 
-        const injury = Object.assign({
+        switch(type){
+            case 'BloodLoss':
+                className = '';
+                break;
+            default:
+                // Nothing
+                break;
+        }
+
+        const injuryClass = className ? {
             $: {
                 Class: className
+            }
+        } : {};
+
+        const injury = Object.assign(
+            injuryClass,
+            {
+                def: type,
+                ticksSinceCreation: 1,
+                severity: typeof options.severity === 'undefined' ? 20 : options.severity
             },
-            def: 'Cut',
-            ticksSinceCreation: 1,
-            severity: 20
-        },options);
+            options
+        );
 
         // Need to convert to having each value in an array
         /*
