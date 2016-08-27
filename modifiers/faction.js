@@ -2,13 +2,13 @@ module.exports = {
     /**
      * Set the goodwill of a faction towards another faction
      * @param {Object} faction
-     * @param {Number} targetFactionId
+     * @param {Number|String} targetFactionId
      * @param {Number} goodwill
      * @param {Boolean} [hostile]
      * @returns {*}
      */
     setOtherRelation: (faction,targetFactionId,goodwill,hostile) =>{
-        const targetFaction = 'Faction_' + targetFactionId;
+        const targetFaction = typeof targetFactionId === 'number' ? 'Faction_' + targetFactionId : targetFactionId;
         const factionIndex = faction.relations[0].li.findIndex((relation) =>{
             return relation.other[0] === targetFaction;
         });
@@ -17,8 +17,8 @@ module.exports = {
             hostile = hostile || goodwill < -79;
 
             const relation = {
-                other: targetFaction,
-                goodwill
+                other: [targetFaction],
+                goodwill: [goodwill]
             };
 
             if(hostile){
@@ -37,20 +37,9 @@ module.exports = {
      * @param {Boolean} [hostile]
      * @returns {*}
      */
-    setSelfRelations: (faction,goodwill,hostile) =>{
+    setSelfRelations(faction,goodwill,hostile){
         faction.relations[0].li = faction.relations[0].li.map((relation) =>{
-            hostile = hostile || goodwill < -79;
-
-            const newRelation = {
-                other: relation.other,
-                goodwill
-            };
-
-            if(hostile){
-                newRelation.hostile = 'True';
-            }
-
-            return newRelation;
+            return this.setOtherRelation(faction,relation.other[0],goodwill,hostile);
         });
 
         return faction;
