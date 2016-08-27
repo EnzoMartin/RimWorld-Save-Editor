@@ -58,7 +58,6 @@ const initialize = () =>{
         environment: config.env,
         ip: config.ip,
         src: config.isDev,
-        level: config.isTest ? bunyan.FATAL + 1 : 'info',
         version: configuration.version,
         streams: config.isDev ? '' : [
             {
@@ -71,6 +70,11 @@ const initialize = () =>{
             }
         ]
     });
+
+    if(config.isTest){
+        // Disable bunyan logging for tests
+        configuration.logger.level(100);
+    }
 
     configuration.logger.info(`Initialized config for environment "${environment}"`);
 
