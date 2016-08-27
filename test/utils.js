@@ -1,6 +1,7 @@
 require('./_helper');
 const pawn = require('./mocks/pawn');
-const factions = require('./mocks/factions');
+proxyquire.noPreserveCache();
+const factions = proxyquire('./mocks/factions',{});
 
 const Utils = proxyquire('../lib/utils',{
     config:{
@@ -12,6 +13,10 @@ const Utils = proxyquire('../lib/utils',{
 
 
 describe('invoking utils module module', () =>{
+    after(() =>{
+        proxyquire.preserveCache();
+    });
+
     it('should return that the pawn is a colonist', () =>{
         expect(Utils.isColonist(pawn.colonist)).toBe(true);
     });
@@ -45,7 +50,7 @@ describe('invoking utils module module', () =>{
     it('should return the enemy factions', () =>{
         const enemyFactions = Utils.getEnemyFactions(factions);
         expect(typeof enemyFactions).toEqual('object');
-        expect(enemyFactions.length).toEqual(1);
+        expect(enemyFactions.length).toBeGreaterThan(0);
         expect(enemyFactions[0].hostile[0]).toEqual('True');
     });
 });

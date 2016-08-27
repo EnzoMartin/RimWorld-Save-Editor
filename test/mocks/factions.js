@@ -9,6 +9,9 @@ module.exports = [{
             'other': ['Faction_9'],
             'goodwill': ['-100'],
             'hostile': ['True']
+        },{
+            'other': ['Faction_4'],
+            'goodwill': ['-80']
         }]
     }]
 },{
@@ -19,6 +22,21 @@ module.exports = [{
             'other': ['Faction_3'],
             'goodwill': ['-100'],
             'hostile': ['True']
+        },{
+            'other': ['Faction_4'],
+            'goodwill': ['-80']
+        }]
+    }]
+},{
+    'def': ['FooClan'],
+    'loadID': ['4'],
+    'relations': [{
+        'li': [{
+            'other': ['Faction_3'],
+            'goodwill': ['-80']
+        },{
+            'other': ['Faction_9'],
+            'goodwill': ['-80']
         }]
     }]
 }];
