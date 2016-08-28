@@ -2,7 +2,7 @@ require('../_helper');
 proxyquire.noPreserveCache();
 
 const factions = proxyquire('./mocks/factions',{});
-const pawn = proxyquire('./mocks/pawn',{});
+const pawn = proxyquire('./mocks/pawns',{});
 
 const Pawn = require('../../modifiers/pawn');
 

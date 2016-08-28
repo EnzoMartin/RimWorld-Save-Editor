@@ -1,5 +1,5 @@
 require('./_helper');
-const pawn = require('./mocks/pawn');
+const pawn = require('./mocks/pawns');
 proxyquire.noPreserveCache();
 const factions = proxyquire('./mocks/factions',{});
 
