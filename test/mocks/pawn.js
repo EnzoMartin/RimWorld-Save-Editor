@@ -3,12 +3,8 @@ module.exports = {
         $:{
             Class:'Pawn'
         },
-        def:[
-            'Human'
-        ],
-        faction:[
-            'Faction_9'
-        ],
+        def:['Human'],
+        faction:['Faction_9'],
         skills: [{
             skills:[{
                 li:[{
@@ -61,33 +57,21 @@ module.exports = {
         $:{
             Class:'Pawn'
         },
-        def:[
-            'Human'
-        ],
-        faction:[
-            'Faction_3'
-        ]
+        def:['Human'],
+        faction:['Faction_3']
     },
     centipede:{
         $:{
             Class:'Pawn'
         },
-        def:[
-            'Mechanoid_Centipede'
-        ],
-        faction:[
-            'Faction_2'
-        ]
+        def:['Mechanoid_Centipede'],
+        faction:['Faction_2']
     },
     wolf:{
         $:{
             Class:'Pawn'
         },
-        def:[
-            'Wolf'
-        ],
-        faction:[
-            'Faction_3'
-        ]
+        def:['Wolf'],
+        faction:['Faction_3']
     }
 };
