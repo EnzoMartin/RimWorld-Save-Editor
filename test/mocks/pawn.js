@@ -8,7 +8,54 @@ module.exports = {
         ],
         faction:[
             'Faction_9'
-        ]
+        ],
+        skills: [{
+            skills:[{
+                li:[{
+                    def:['Shooting'],
+                    xpSinceLastLevel:['306.0838']
+                },{
+                    def:['Melee'],
+                    xpSinceLastLevel:['460.6791']
+                }]
+            }]
+        }],
+        apparel:[{
+            wornApparel:[{
+                li:[{
+                    def:['Apparel_BasicShirt'],
+                    health:['100'],
+                    stackCount:['1'],
+                    stuff:['Synthread'],
+                    quality:['Normal']
+                },{
+                    def:['Apparel_Pants'],
+                    health:['100'],
+                    stackCount:['1'],
+                    stuff:['Synthread'],
+                    quality:['Normal']
+                }]
+            }],
+            lastApparelWearoutTick:['250']
+        }],
+        equipment:[{
+            primary:[{
+                def:['Gun_InfernoCannon'],
+                health:['100'],
+                quality:['Shoddy']
+            }]
+        }],
+        healthTracker:[{
+            hediffSet:[{
+                hediffs:[]
+            }],
+            surgeryBills:[{
+                bills:[]
+            }],
+            immunity:[{
+                imList:[]
+            }]
+        }]
     },
     human:{
         $:{
