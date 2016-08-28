@@ -7,6 +7,8 @@ const pawn = proxyquire('./mocks/pawns',{});
 const Pawn = require('../../modifiers/pawn');
 
 const colonist = pawn.colonist;
+const wolf = pawn.wolf;
+const wanderer = pawn.wanderer;
 
 const health = 500;
 const quality = 'Masterwork';
@@ -26,6 +28,14 @@ describe('invoking pawn modifier',() =>{
         expect(modified.skills[0].skills[0].li[1].level).toEqual(skill);
     });
 
+    it('does not modify the skills of a pawn with no skills', () =>{
+        expect(wolf.skills[0].$.IsNull).toEqual('True');
+        expect(typeof wolf.skills[0].skills).toEqual('undefined');
+        const modified = Pawn.setSkills(wolf,skill);
+        expect(modified.skills[0].$.IsNull).toEqual('True');
+        expect(typeof modified.skills[0].skills).toEqual('undefined');
+    });
+
     it('modifies the pawn\'s apparel health', () =>{
         expect(colonist.apparel[0].wornApparel[0].li[0].health).toEqual('100');
         expect(colonist.apparel[0].wornApparel[0].li[1].health).toEqual('50');
@@ -42,6 +52,22 @@ describe('invoking pawn modifier',() =>{
         expect(modified.apparel[0].wornApparel[0].li[1].quality).toEqual(quality);
     });
 
+    it('does not modify pawn\'s apparel health with no apparel', () =>{
+        expect(wolf.apparel[0].$.IsNull).toEqual('True');
+        expect(typeof wolf.apparel[0].wornApparel).toEqual('undefined');
+        const modified = Pawn.setApparelHealth(wolf,health);
+        expect(modified.apparel[0].$.IsNull).toEqual('True');
+        expect(typeof modified.apparel[0].wornApparel).toEqual('undefined');
+    });
+
+    it('does not modify pawn\'s apparel quality with no apparel', () =>{
+        expect(wolf.apparel[0].$.IsNull).toEqual('True');
+        expect(typeof wolf.apparel[0].wornApparel).toEqual('undefined');
+        const modified = Pawn.setApparelQuality(wolf,quality);
+        expect(modified.apparel[0].$.IsNull).toEqual('True');
+        expect(typeof modified.apparel[0].wornApparel).toEqual('undefined');
+    });
+
     it('modifies the pawn\'s equipment health', () =>{
         expect(colonist.equipment[0].primary[0].health).toEqual('100');
         const modified = Pawn.setEquipmentHealth(colonist,health);
@@ -52,6 +78,22 @@ describe('invoking pawn modifier',() =>{
         expect(colonist.equipment[0].primary[0].quality).toEqual('Shoddy');
         const modified = Pawn.setEquipmentQuality(colonist,quality);
         expect(modified.equipment[0].primary[0].quality).toEqual(quality);
+    });
+
+    it('does not modify pawn\'s equipment health with no equipment', () =>{
+        expect(wolf.equipment[0].$.IsNull).toEqual('True');
+        expect(typeof wolf.equipment[0].primary).toEqual('undefined');
+        const modified = Pawn.setEquipmentHealth(wolf,health);
+        expect(modified.equipment[0].$.IsNull).toEqual('True');
+        expect(typeof modified.equipment[0].primary).toEqual('undefined');
+    });
+
+    it('does not modify pawn\'s apparel quality with no apparel', () =>{
+        expect(wolf.equipment[0].$.IsNull).toEqual('True');
+        expect(typeof wolf.equipment[0].primary).toEqual('undefined');
+        const modified = Pawn.setEquipmentQuality(wolf,quality);
+        expect(modified.equipment[0].$.IsNull).toEqual('True');
+        expect(typeof modified.equipment[0].primary).toEqual('undefined');
     });
 
     it('returns the pawn\'s faction ID', () =>{
@@ -65,6 +107,20 @@ describe('invoking pawn modifier',() =>{
     it('modifies the pawn\'s faction', () =>{
         expect(colonist.faction[0]).toEqual('Faction_9');
         const modified = Pawn.setFaction(colonist,faction);
+        expect(modified.faction[0]).toEqual(faction);
+    });
+
+    it('returns 0 for the faction ID if the pawn\'s faction is missing', () =>{
+        expect(Pawn.getFactionId(wanderer)).toEqual(0);
+    });
+
+    it('returns Faction_0 for the faction if the pawn\'s faction is missing', () =>{
+        expect(Pawn.getFaction(wanderer)).toEqual('Faction_0');
+    });
+
+    it('modifies the pawn\'s faction even if pawn has no faction', () =>{
+        expect(typeof wanderer.faction).toEqual('undefined');
+        const modified = Pawn.setFaction(wanderer,faction);
         expect(modified.faction[0]).toEqual(faction);
     });
 });

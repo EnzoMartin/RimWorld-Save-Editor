@@ -93,9 +93,7 @@ module.exports = {
      * @returns {Object}
      */
     setFaction:(thing,faction) =>{
-        if(thing.faction){
-            thing.faction[0] = faction;
-        }
+        thing.faction = [faction];
         return thing;
     },
     /**
@@ -104,7 +102,7 @@ module.exports = {
      * @returns {String}
      */
     getFaction:(thing) =>{
-        return thing.faction[0] || 'Faction_0';
+        return thing.faction ? thing.faction[0] : 'Faction_0';
     },
     /**
      * Return pawn's faction ID

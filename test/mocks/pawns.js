@@ -71,11 +71,32 @@ module.exports = {
         def:['Mechanoid_Centipede'],
         faction:['Faction_2']
     },
+    wanderer:{
+        $:{
+            Class:'Pawn'
+        },
+        def:['Human']
+    },
     wolf:{
         $:{
             Class:'Pawn'
         },
         def:['Wolf'],
-        faction:['Faction_3']
+        faction:['Faction_3'],
+        equipment:[{
+            $: {
+                IsNull:'True'
+            }
+        }],
+        apparel:[{
+            $: {
+                IsNull:'True'
+            }
+        }],
+        skills:[{
+            $: {
+                IsNull:'True'
+            }
+        }]
     }
 };
