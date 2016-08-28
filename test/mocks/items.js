@@ -13,5 +13,10 @@ module.exports = {
         stackCount:['1'],
         stuff:['Plasteel'],
         quality:['Normal']
+    },
+    steel:{
+        $:{Class:'ThingWithComps'},
+        def:['Steel'],
+        stackCount:['50']
     }
 };
