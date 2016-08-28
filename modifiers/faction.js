@@ -14,7 +14,7 @@ function createRelation(targetFaction,goodwill,hostile){
     };
 
     if(hostile){
-        relation.hostile = 'True';
+        relation.hostile = ['True'];
     }
 
     return relation;

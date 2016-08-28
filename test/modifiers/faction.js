@@ -1,17 +1,27 @@
 require('../_helper');
 proxyquire.noPreserveCache();
-const factions = proxyquire('./mocks/factions',{});
+const factionsSource = proxyquire('./mocks/factions',{});
 const Faction = require('../../modifiers/faction');
 
 
-const otherFaction = factions[0];
-const playerFaction = factions[1];
-const otherFactionId = otherFaction.loadID[0];
-const playerFactionId = playerFaction.loadID[0];
+var factions = [];
+var otherFaction = {};
+var playerFaction = {};
+var fooFaction = {};
+var playerFactionId = 0;
 
 describe('invoking faction modifier',() =>{
     after(() =>{
         proxyquire.preserveCache();
+    });
+
+    beforeEach(() =>{
+        // Clear our any changes from the tests
+        factions = JSON.parse(JSON.stringify(factionsSource));
+        otherFaction = factions[0];
+        playerFaction = factions[1];
+        fooFaction = factions[2];
+        playerFactionId = playerFaction.loadID[0];
     });
 
     it('modifies the relations of a faction towards another faction', () =>{
@@ -32,6 +42,19 @@ describe('invoking faction modifier',() =>{
         expect(typeof modified.relations[0].li[1].hostile).toEqual('undefined');
         expect(modified.relations[0].li[0].goodwill[0]).toEqual(100);
         expect(modified.relations[0].li[1].goodwill[0]).toEqual(100);
+    });
+
+    it('modifies all the relations of the faction', () =>{
+        const targetFaction = 'Faction_9';
+        expect(factions[0].relations[0].li[0].goodwill[0]).toEqual('-100');
+        expect(factions[2].relations[0].li[1].goodwill[0]).toEqual('-80');
+        expect(factions[0].relations[0].li[0].hostile[0]).toEqual('True');
+        expect(typeof factions[2].relations[0].li[1].hostile).toEqual('undefined');
+        const modifiedFactions = Faction.setRelations(factions,targetFaction,-90,true);
+        expect(modifiedFactions[0].relations[0].li[0].goodwill[0]).toEqual(-90);
+        expect(modifiedFactions[2].relations[0].li[1].goodwill[0]).toEqual(-90);
+        expect(modifiedFactions[0].relations[0].li[0].hostile[0]).toEqual('True');
+        expect(modifiedFactions[2].relations[0].li[1].hostile[0]).toEqual('True');
     });
 
     it('clears the tactical memory of a faction', () =>{
