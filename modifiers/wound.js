@@ -57,6 +57,7 @@ module.exports = {
      * @param {String} [options.source] Type of thing that caused the injury
      * @param {String} [options.sourceBodyPartGroup] The part group of the thing that caused the injury
      * @param {Number} [options.ticksToDisappear]
+     * @param {Number} [options.ticksSinceCreation]
      * @param {Boolean} [options.isOld]
      * @returns {*}
      */
@@ -88,7 +89,7 @@ module.exports = {
             injuryClass,
             {
                 def: type,
-                ticksSinceCreation: 1,
+                ticksSinceCreation: typeof options.ticksSinceCreation === 'undefined' ? 1 : options.ticksSinceCreation,
                 severity: typeof options.severity === 'undefined' ? 20 : options.severity
             },
             options
