@@ -5,6 +5,21 @@ const pjson = require('../package.json');
 const os = require('os');
 const networks = os.networkInterfaces();
 
+const qualities = [
+    'Awful',
+    'Shoddy',
+    'Poor',
+    'Normal',
+    'Good',
+    'Superior',
+    'Excellent',
+    'Masterwork',
+    'Legendary'
+];
+const highestQuality = qualities[qualities.length - 1];
+const maxSkill = 20;
+const maxHealth = 1000;
+
 // Find the current IP
 var ip = '127.0.0.1';
 for(var name in networks){
@@ -30,40 +45,56 @@ for(var name in networks){
 
 /**
  * Game
- * @property {String} playerFaction
- * @property {Number} playerFactionId
- * @property {String|Number} skillLevel
+ * @property {String} colonyFaction
+ * @property {Number} colonyFactionId
+ * @property {Number} skillLevel
  * @property {String|Number} supportedVersion
- * @property {String|Number} healthLevel
+ * @property {Number} healthLevel
  * @property {String} qualityLevel
  * @property {String} saveDir
  * @property {String} saveName
  * @property {String|Boolean} saveId
  * @property {String} modifiedName
+ * @property {Function} updateColonyFaction
  */
 class Game {
     constructor(config){
-        this.playerFaction = config.playerFaction || 'Faction_9';
-        this.playerFactionId = parseInt(this.playerFaction.split('_')[1],10);
-        this.skillLevel = typeof config.skillLevel === 'undefined' ? 20 : config.skillLevel;
+        this.updateColonyFaction(config.colonyFaction || 'Faction_9');
         this.supportedVersion = pjson.engines.game;
 
-        if(this.skillLevel > 20){
-            console.warn('Skill level cannot be above 20, setting it to 20 instead');
-            this.skillLevel = 20;
+        this.skillLevel = parseInt(config.skillLevel,10);
+        if(isNaN(this.skillLevel) || this.skillLevel > maxSkill){
+            console.warn(`Skill level must be a number and cannot be above "${maxSkill}", setting it to "${maxSkill}" instead`);
+            this.skillLevel = maxSkill;
         }
 
-        //TODO: Read item health definitions?
-        this.healthLevel = typeof config.healthLevel === 'undefined' ? 1000 : config.healthLevel;
-        this.qualityLevel = config.qualityLevel || 'Masterwork';
+        this.healthLevel = parseInt(config.healthLevel,10);
+        if(isNaN(this.healthLevel)){
+            console.warn(`Health level must be a number, setting it to "${maxHealth}" instead`);
+            this.healthLevel = maxHealth;
+        }
 
-        // TODO: Read from game config file, prompt user for save location, check if running inside the game folder
-        this.saveDir = config.saveDir;
+        this.qualityLevel = config.qualityLevel;
+        if(qualities.indexOf(this.qualityLevel) === -1){
+            console.warn(`Specified quality does not exist, resetting to "${highestQuality}"`);
+            this.qualityLevel = highestQuality;
+        }
 
-        //TODO: Prompt user for save to open
-        this.saveName = config.saveName;
-        this.saveId = config.saveId || false;
+        this.saveDir = config.saveDir || process.env.LOCALAPPDATA + '\\..\\LocalLow\\Ludeon Studios\\RimWorld\\Saves\\';
+        this.saveName = config.saveName || 'Colony1.rws';
         this.modifiedName = (typeof config.modifiedNamePrefix === 'undefined' ? 'Edited' : config.modifiedNamePrefix) + this.saveName;
+
+        // Only used with Storage
+        this.saveId = config.saveId || false;
+    }
+
+    /**
+     * Update the colony faction name/id
+     * @param {String} name Example: Faction_9
+     */
+    updateColonyFaction(name){
+        this.colonyFaction = name;
+        this.colonyFactionId = parseInt(this.colonyFaction.split('_')[1],10);
     }
 }
 
@@ -76,8 +107,8 @@ class Game {
  * @property {Boolean} upgradePawnEquipment
  * @property {Boolean} upgradePawnApparel
  * @property {Boolean} upgradeItems
- * @property {Boolean} setPlayerPeace
- * @property {Boolean} setPlayerWar
+ * @property {Boolean} setColonyPeace
+ * @property {Boolean} setColonyWar
  * @property {Boolean} setWorldPeace
  * @property {Boolean} setWorldWar
  */
@@ -85,7 +116,7 @@ class QuickActions {
     constructor(config){
         // Events
         this.woundHostilePawns = typeof config.woundHostilePawns === 'boolean' ? config.woundHostilePawns : true;
-        this.caravanDisaster = typeof config.caravanDisaster === 'boolean' ? config.caravanDisaster : true;
+        this.caravanDisaster = config.caravanDisaster || false;
 
         // Colony
         this.upgradePawnSkills = typeof config.upgradePawnSkills === 'boolean' ? config.upgradePawnSkills : true;
@@ -97,8 +128,8 @@ class QuickActions {
         this.upgradeArt = typeof config.upgradeArt === 'boolean' ? config.upgradeArt : true;
 
         // Factions
-        this.setPlayerPeace = config.setPlayerPeace || false;
-        this.setPlayerWar = config.setPlayerWar || false;
+        this.setColonyPeace = config.setColonyPeace || false;
+        this.setColonyWar = config.setColonyWar || false;
         this.setWorldPeace = config.setWorldPeace || false;
         this.setWorldWar = config.setWorldWar || false;
 
@@ -106,8 +137,8 @@ class QuickActions {
             console.warn('Ignoring world peace due to world war set to `true`');
         }
 
-        if(this.setPlayerPeace && this.setPlayerWar){
-            console.warn('Ignoring player peace due to player war set to `true`');
+        if(this.setColonyPeace && this.setColonyWar){
+            console.warn('Ignoring colony peace due to colony war set to `true`');
         }
     }
 }
@@ -144,30 +175,15 @@ class Configuration {
         this.setBaseConfig(config);
         this.Storage = false;
 
-        if(this.isTest){
-            // TODO: Remove this when below TODO is done
-            config.gameConfig = {
-                // eslint-disable-next-line global-require
-                saveDir: require('path').join(__dirname,'../test/mocks'),
-                saveName: 'Test.rws'
-            };
-        }
-
         // TODO: Support CLI/API usage
         if(this.useStorage){
             this.Storage = new Storage(config.storageConfig);
             if(!this.Storage.connection){
                 throw new Error('You need to specify the storage medium config');
             }
-        } else {
-            if(typeof config.gameConfig !== 'object'){
-                throw new Error('You need to specify the game config, check the example.local.js file or the README for instructions');
-            } else if(!config.gameConfig.saveName || !config.gameConfig.saveDir){
-                throw new Error('You need to specify the save file and directory, check the example.local.js file or the README for instructions');
-            }
         }
 
-        this.Game = new Game(config.gameConfig);
+        this.Game = new Game(config.gameConfig || {});
         this.QuickActions = new QuickActions(config.quickActionsConfig || {});
     }
 }

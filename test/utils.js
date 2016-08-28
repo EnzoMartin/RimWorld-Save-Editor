@@ -6,7 +6,7 @@ const factions = proxyquire('./mocks/factions',{});
 const Utils = proxyquire('../lib/utils',{
     config:{
         Game: {
-            playerFaction: 'Faction_9'
+            colonyFaction: 'Faction_9'
         }
     }
 });
@@ -49,10 +49,10 @@ describe('invoking utils module module', () =>{
         expect(Utils.isHostileHumanPawn(pawn.colonist,factions)).toBe(false);
     });
 
-    it('should return the player faction object', () =>{
-        const playerFaction = Utils.getPlayerFaction(factions);
-        expect(typeof playerFaction).toEqual('object');
-        expect(playerFaction.loadID[0]).toEqual('9');
+    it('should return the colony faction object', () =>{
+        const colonyFaction = Utils.getColonyFaction(factions);
+        expect(typeof colonyFaction).toEqual('object');
+        expect(colonyFaction.loadID[0]).toEqual('9');
     });
 
     it('should return the enemy factions', () =>{

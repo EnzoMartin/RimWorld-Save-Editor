@@ -10,6 +10,7 @@ const XML = require('./lib/parser');
 const Local = require('./lib/local');
 const Save = require('./lib/save');
 const Actions = require('./lib/actions');
+const Utils = require('./lib/utils');
 
 const Game = config.Game;
 const savePath = path.join(Game.saveDir,Game.saveName);
@@ -26,6 +27,7 @@ function processSave(err,result){
         const gameSave = result.savegame.game[0];
 
         if(Save.isSupported(gameMeta)){
+            config.Game.updateColonyFaction(Utils.findPlayerColony(gameSave));
             const result = Actions.doQuickActions(gameSave);
             const editedSave = {
                 savegame:{

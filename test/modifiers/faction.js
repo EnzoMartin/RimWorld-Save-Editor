@@ -6,9 +6,9 @@ const Faction = require('../../modifiers/faction');
 
 var factions = [];
 var otherFaction = {};
-var playerFaction = {};
+var colonyFaction = {};
 var fooFaction = {};
-var playerFactionId = 0;
+var colonyFactionId = 0;
 
 describe('invoking faction modifier',() =>{
     after(() =>{
@@ -19,25 +19,25 @@ describe('invoking faction modifier',() =>{
         // Clear our any changes from the tests
         factions = JSON.parse(JSON.stringify(factionsSource));
         otherFaction = factions[0];
-        playerFaction = factions[1];
+        colonyFaction = factions[1];
         fooFaction = factions[2];
-        playerFactionId = playerFaction.loadID[0];
+        colonyFactionId = colonyFaction.loadID[0];
     });
 
     it('modifies the relations of a faction towards another faction', () =>{
         expect(otherFaction.relations[0].li[0].hostile[0]).toEqual('True');
         expect(otherFaction.relations[0].li[0].goodwill[0]).toEqual('-100');
-        const modified = Faction.setOtherRelation(otherFaction,playerFactionId,100,false);
+        const modified = Faction.setOtherRelation(otherFaction,colonyFactionId,100,false);
         expect(typeof modified.relations[0].li[0].hostile).toEqual('undefined');
         expect(modified.relations[0].li[0].goodwill[0]).toEqual(100);
     });
 
     it('modifies all the relations of the faction', () =>{
-        expect(playerFaction.relations[0].li[0].hostile[0]).toEqual('True');
-        expect(playerFaction.relations[0].li[0].goodwill[0]).toEqual('-100');
-        expect(typeof playerFaction.relations[0].li[1].hostile).toEqual('undefined');
-        expect(playerFaction.relations[0].li[1].goodwill[0]).toEqual('-80');
-        const modified = Faction.setSelfRelations(playerFaction,100,false);
+        expect(colonyFaction.relations[0].li[0].hostile[0]).toEqual('True');
+        expect(colonyFaction.relations[0].li[0].goodwill[0]).toEqual('-100');
+        expect(typeof colonyFaction.relations[0].li[1].hostile).toEqual('undefined');
+        expect(colonyFaction.relations[0].li[1].goodwill[0]).toEqual('-80');
+        const modified = Faction.setSelfRelations(colonyFaction,100,false);
         expect(typeof modified.relations[0].li[0].hostile).toEqual('undefined');
         expect(typeof modified.relations[0].li[1].hostile).toEqual('undefined');
         expect(modified.relations[0].li[0].goodwill[0]).toEqual(100);
