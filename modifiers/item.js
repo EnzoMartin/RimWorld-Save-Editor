@@ -21,7 +21,6 @@ module.exports = {
         if(thing.quality){
             thing.quality = [quality];
         }
-
         return thing;
     }
 };
