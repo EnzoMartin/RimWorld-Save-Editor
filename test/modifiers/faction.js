@@ -33,4 +33,10 @@ describe('invoking faction modifier',() =>{
         expect(modified.relations[0].li[0].goodwill[0]).toEqual(100);
         expect(modified.relations[0].li[1].goodwill[0]).toEqual(100);
     });
+
+    it('clears the tactical memory of a faction', () =>{
+        expect(otherFaction.tacticalMemory[0].traps.length).toBeGreaterThan(0);
+        const modified = Faction.clearTacticalMemory(otherFaction);
+        expect(modified.tacticalMemory[0].traps.length).toEqual(0);
+    });
 });

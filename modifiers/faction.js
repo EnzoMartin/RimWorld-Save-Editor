@@ -69,12 +69,15 @@ module.exports = {
         });
     },
     /**
-     * Remove a faction's memory of traps from previous visits to the colony
-     * @returns {{traps: Array}}
+     * Clears a faction's tactical memory from previous visits to the colony
+     * @param {Object} faction
+     * @returns {Object}
      */
-    eraseMemory: () =>{
-        return {
-            traps: []
-        };
+    clearTacticalMemory: (faction) =>{
+        faction.tacticalMemory = [{
+            traps:[]
+        }];
+
+        return faction;
     }
 };
