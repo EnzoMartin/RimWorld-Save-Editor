@@ -89,11 +89,11 @@ module.exports = {
     /**
      * Set pawn's faction affiliation
      * @param {Object} thing
-     * @param {String} faction
+     * @param {String|Number} faction Accepts either an ID or a string like Faction_0
      * @returns {Object}
      */
     setFaction:(thing,faction) =>{
-        thing.faction = [faction];
+        thing.faction = [typeof faction === 'number' ? 'Faction_' + faction : faction];
         return thing;
     },
     /**

@@ -2,22 +2,32 @@ require('../_helper');
 proxyquire.noPreserveCache();
 
 const factions = proxyquire('./mocks/factions',{});
-const pawn = proxyquire('./mocks/pawns',{});
+const pawnsSource = proxyquire('./mocks/pawns',{});
 
 const Pawn = require('../../modifiers/pawn');
 
-const colonist = pawn.colonist;
-const wolf = pawn.wolf;
-const wanderer = pawn.wanderer;
+var pawns = {};
+var colonist = {};
+var wolf = {};
+var wanderer = {};
 
 const health = 500;
 const quality = 'Masterwork';
 const skill = 20;
 const faction = 'Faction_1';
+const factionId = 1;
 
 describe('invoking pawn modifier',() =>{
     after(() =>{
         proxyquire.preserveCache();
+    });
+
+    beforeEach(() =>{
+        // Clear our any changes from the tests
+        pawns = JSON.parse(JSON.stringify(pawnsSource));
+        colonist = pawns.colonist;
+        wolf = pawns.wolf;
+        wanderer = pawns.wanderer;
     });
 
     it('modifies the skills of the pawn', () =>{
@@ -104,9 +114,15 @@ describe('invoking pawn modifier',() =>{
         expect(Pawn.getFaction(colonist)).toEqual('Faction_9');
     });
 
-    it('modifies the pawn\'s faction', () =>{
+    it('modifies the pawn\'s faction with a string input', () =>{
         expect(colonist.faction[0]).toEqual('Faction_9');
         const modified = Pawn.setFaction(colonist,faction);
+        expect(modified.faction[0]).toEqual(faction);
+    });
+
+    it('modifies the pawn\'s faction with a number input', () =>{
+        expect(colonist.faction[0]).toEqual('Faction_9');
+        const modified = Pawn.setFaction(colonist,factionId);
         expect(modified.faction[0]).toEqual(faction);
     });
 
