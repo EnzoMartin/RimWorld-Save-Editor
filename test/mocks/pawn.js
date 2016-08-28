@@ -9,9 +9,13 @@ module.exports = {
             skills:[{
                 li:[{
                     def:['Shooting'],
+                    level: ['12'],
+                    passion: ['Minor'],
                     xpSinceLastLevel:['306.0838']
                 },{
                     def:['Melee'],
+                    level: ['5'],
+                    passion: ['Major'],
                     xpSinceLastLevel:['460.6791']
                 }]
             }]
@@ -26,10 +30,10 @@ module.exports = {
                     quality:['Normal']
                 },{
                     def:['Apparel_Pants'],
-                    health:['100'],
+                    health:['50'],
                     stackCount:['1'],
                     stuff:['Synthread'],
-                    quality:['Normal']
+                    quality:['Shoddy']
                 }]
             }],
             lastApparelWearoutTick:['250']
