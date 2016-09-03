@@ -5,15 +5,13 @@ const bunyan = require('bunyan');
 // Environment specific configs
 var configs = {
     development:{
-        port:3000,
         isDev:true,
         isProd:false
     },
     test:{
         isDev:false,
         isTest:true,
-        isProd:false,
-        port:process.env.PORT || 8000
+        isProd:false
     },
     staging:{
         useStorage: true,
@@ -23,8 +21,7 @@ var configs = {
     production:{
         useStorage: true,
         isDev:false,
-        isProd:true,
-        port:process.env.PORT || 80
+        isProd:true
     }
 };
 
@@ -34,7 +31,7 @@ var configs = {
  * @returns {Configuration.logger}
  */
 const initialize = () =>{
-    const environment = process.env.NODE_ENV || process.env.SERVER_ENV || 'development';
+    const environment = process.env.NODE_ENV || 'development';
     var config = configs[environment];
 
     if(!config){
