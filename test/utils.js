@@ -11,6 +11,27 @@ const Utils = proxyquire('../lib/utils',{
     }
 });
 
+const game = {
+    scenario: [{
+        playerFaction: [{
+            factionDef: ['PlayerColony']
+        }]
+    }],
+    world: [{
+        factionManager: [{
+            allFactions: [{
+                li: [{
+                    def: ['Outlander'],
+                    loadID: [1]
+                },{
+                    def: ['PlayerColony'],
+                    loadID: [2]
+                }]
+            }]
+        }]
+    }]
+};
+
 
 describe('invoking utils module module', () =>{
     after(() =>{
@@ -74,5 +95,17 @@ describe('invoking utils module module', () =>{
         expect(typeof enemyFactions).toEqual('object');
         expect(enemyFactions.length).toBeGreaterThan(0);
         expect(typeof enemyFactions[0]).toEqual('number');
+    });
+
+    it('should return the player faction', () =>{
+        const faction = Utils.findPlayerColony(game);
+        expect(typeof faction).toEqual('string');
+        expect(faction).toEqual('Faction_2');
+    });
+
+    it('should throw an error if the player faction doesn\'t exist', () =>{
+        expect(function (){
+            Utils.findPlayerColony();
+        }).toThrow(/Unable to find player colony/);
     });
 });
