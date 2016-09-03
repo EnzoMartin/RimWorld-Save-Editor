@@ -2,7 +2,6 @@
 'use strict';
 
 const pjson = require('../package.json');
-
 const qualities = [
     'Awful',
     'Shoddy',
@@ -58,9 +57,6 @@ class Game {
         this.saveDir = config.saveDir || process.env.LOCALAPPDATA + '\\..\\LocalLow\\Ludeon Studios\\RimWorld\\Saves\\';
         this.saveName = config.saveName || 'Colony1.rws';
         this.modifiedName = (typeof config.modifiedNamePrefix === 'undefined' ? 'Edited' : config.modifiedNamePrefix) + this.saveName;
-
-        // Only used with Storage
-        this.saveId = config.saveId || false;
     }
 
     /**
@@ -119,51 +115,17 @@ class QuickActions {
 }
 
 /**
- * Storage
- * @property {String} connection
- */
-class Storage {
-    constructor(config){
-        this.connection = config.connection || process.env.STORAGE_CONNECTION;
-    }
-}
-
-/**
- * @param {Storage} Storage
  * @param {QuickActions} QuickActions
  * @param {Game} Game
  */
 class Configuration {
-    setBaseConfig(config){
+    constructor(config){
         this.version = pjson.version;
         this.name = pjson.name;
-        this.env = config.env;
-        this.isDev = typeof config.isDev === 'boolean' ? config.isDev : true;
-        this.isTest = config.isTest || false;
-        this.isProd = typeof config.isProd === 'boolean' ? config.isProd : false;
-        this.useStorage = typeof config.useStorage === 'boolean' ? config.useStorage : false;
-    }
-
-    constructor(config){
-        this.setBaseConfig(config);
-        this.Storage = false;
-
-        // TODO: Support CLI/API usage
-        if(this.useStorage){
-            this.Storage = new Storage(config.storageConfig);
-            if(!this.Storage.connection){
-                throw new Error('You need to specify the storage medium config');
-            }
-        }
 
         this.Game = new Game(config.gameConfig || {});
         this.QuickActions = new QuickActions(config.quickActionsConfig || {});
     }
 }
 
-module.exports = {
-    Configuration,
-    QuickActions,
-    Storage,
-    Game
-};
+module.exports = Configuration;

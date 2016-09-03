@@ -5,7 +5,6 @@ const path = require('path');
 const config = require('./config');
 const logger = config.logger.child({file:__filename});
 
-const Storage = require('./lib/storage');
 const XML = require('./lib/parser');
 const Local = require('./lib/local');
 const Save = require('./lib/save');
@@ -16,6 +15,32 @@ const Game = config.Game;
 const savePath = path.join(Game.saveDir,Game.saveName);
 const writePath = path.join(Game.saveDir,Game.modifiedName);
 
+/**
+ * Convert the edited save game back to XML and save to file
+ * @param {Object} editedSave
+ * @param {Array} modified
+ */
+function save(editedSave,modified){
+    Local.save(writePath,XML.compile(editedSave),(err) =>{
+        if(err){
+            logger.error('Failed to write save file',err);
+            throw new Error(err);
+        } else {
+            const elapsed = process.hrtime(processTime);
+            logger.info(`Save written as "${Game.modifiedName}", ready to play!`);
+            logger.info(`Process took ${(elapsed[0] * 1000 + elapsed[1] / 1000000)}ms`);
+            modified.forEach((item) =>{
+                logger.info(`${item.name} modified:`,item.modified);
+            });
+        }
+    });
+}
+
+/**
+ * Process the converted XML string
+ * @param {Error} err
+ * @param {Object} result
+ */
 function processSave(err,result){
     if(err){
         logger.error(err);
@@ -41,25 +66,18 @@ function processSave(err,result){
             };
 
             logger.info('Finished modifying, writing save file');
-            Local.save(writePath,XML.compile(editedSave),(err) =>{
-                if(err){
-                    logger.error('Failed to write save file',err);
-                    throw new Error(err);
-                } else {
-                    const elapsed = process.hrtime(processTime);
-                    logger.info(`Save written as "${Game.modifiedName}", ready to play!`);
-                    logger.info(`Process took ${(elapsed[0] * 1000 + elapsed[1] / 1000000)}ms`);
-                    result.modified.forEach((item) =>{
-                        logger.info(`${item.name} modified:`,item.modified);
-                    });
-                }
-            });
+            save(editedSave,result.modified);
         } else {
             throw new Error('Unsupported game save version');
         }
     }
 }
 
+/**
+ * Process the XML loaded
+ * @param {Error} err
+ * @param {String} file
+ */
 function processXml(err,file){
     if(err){
         logger.error(err);
@@ -70,8 +88,5 @@ function processXml(err,file){
     }
 }
 
-if(config.useStorage){
-    Storage.get(Game.saveId, processXml);
-} else {
-    Local.get(savePath,processXml);
-}
+// Start process by loading in the desired file
+Local.get(savePath,processXml);

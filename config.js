@@ -1,79 +1,30 @@
 /* eslint no-process-env: 0 global-require: 0*/
-const Models = require('./config/models');
+const Configuration = require('./config/models');
 const bunyan = require('bunyan');
 
-// Environment specific configs
-var configs = {
-    development:{
-        isDev:true,
-        isProd:false
-    },
-    test:{
-        isDev:false,
-        isTest:true,
-        isProd:false
-    },
-    staging:{
-        useStorage: true,
-        isDev:false,
-        isProd:true
-    },
-    production:{
-        useStorage: true,
-        isDev:false,
-        isProd:true
-    }
-};
-
 /**
- * Load up config for specified environment
+ * Load up config
  * @returns {Configuration}
  * @returns {Configuration.logger}
  */
 const initialize = () =>{
-    const environment = process.env.NODE_ENV || 'development';
-    var config = configs[environment];
+    let config = {};
 
-    if(!config){
-        throw new Error('No "' + environment + '" environment configuration exists');
-    }
-
-    if(config.isDev){
-        // Load the config overrides for development environment
-        try {
-            config = Object.assign(config,require('./config/local'));
-        } catch (err){
-            // Ignore
+    try {
+        config = Object.assign(config,require('./config/local'));
+    } catch (err){
+        if(err.code !== 'MODULE_NOT_FOUND'){
+            throw err;
         }
     }
 
-    config.env = environment;
-    const configuration = new Models.Configuration(config);
+    const configuration = new Configuration(config);
 
     configuration.logger = bunyan({
         name: configuration.name,
-        environment: config.env,
-        ip: config.ip,
-        src: config.isDev,
-        version: configuration.version,
-        streams: config.isDev ? '' : [
-            {
-                level:'info',
-                stream:process.stdout
-            },
-            {
-                level:'error',
-                stream:process.stderr
-            }
-        ]
+        src: true,
+        version: configuration.version
     });
-
-    if(config.isTest){
-        // Disable bunyan logging for tests
-        configuration.logger.level(100);
-    }
-
-    configuration.logger.info(`Initialized config for environment "${environment}"`);
 
     module.exports = configuration;
     return configuration;
