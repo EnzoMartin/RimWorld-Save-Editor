@@ -21,6 +21,7 @@ const writePath = path.join(Game.saveDir,Game.modifiedName);
  * @param {Array} modified
  */
 function save(editedSave,modified){
+    logger.info(`Saving local file "${writePath}"`);
     Local.save(writePath,XML.compile(editedSave),(err) =>{
         if(err){
             logger.error('Failed to write save file',err);
@@ -89,4 +90,5 @@ function processXml(err,file){
 }
 
 // Start process by loading in the desired file
+logger.info(`Accessing file "${savePath}"`);
 Local.get(savePath,processXml);
