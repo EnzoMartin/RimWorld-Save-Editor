@@ -13,9 +13,12 @@
   ],
   "engines": {
     "node": ">=6",
-    "npm": ">=3",
-    "game": "0.14"
+    "npm": ">=3"
   },
+  "supportedVersions": [
+    "~0.15",
+    "~0.14"
+  ],
   "main": "app.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib/**/*.js test/**/*.js *.js",
@@ -26,6 +29,7 @@
   },
   "dependencies": {
     "bunyan": "^1.8.1",
+    "semver": "^5.3.0",
     "xml2js": "^0.4.16"
   },
   "optionalDependencies": {

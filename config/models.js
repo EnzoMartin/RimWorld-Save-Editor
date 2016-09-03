@@ -48,7 +48,7 @@ for(var name in networks){
  * @property {String} colonyFaction
  * @property {Number} colonyFactionId
  * @property {Number} skillLevel
- * @property {String|Number} supportedVersion
+ * @property {Array} supportedVersions
  * @property {Number} healthLevel
  * @property {String} qualityLevel
  * @property {String} saveDir
@@ -60,7 +60,7 @@ for(var name in networks){
 class Game {
     constructor(config){
         this.updateColonyFaction(config.colonyFaction || 'Faction_9');
-        this.supportedVersion = pjson.engines.game;
+        this.supportedVersions = pjson.supportedVersions;
 
         this.skillLevel = parseInt(config.skillLevel,10);
         if(isNaN(this.skillLevel) || this.skillLevel > maxSkill){

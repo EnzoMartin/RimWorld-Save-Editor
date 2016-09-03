@@ -2,20 +2,20 @@ require('./_helper');
 const Save = proxyquire('../lib/save',{
     config:{
         Game: {
-            supportedVersion: '0.14'
+            supportedVersions: ['~0.14']
         }
     }
 });
 
 const supportedMock = {
     gameVersion:[
-        '0.14'
+        '0.14.1000 rev1'
     ]
 };
 
 const unsupportedMock = {
     gameVersion:[
-        '0.13'
+        '0.13.1000 rev0'
     ]
 };
 
