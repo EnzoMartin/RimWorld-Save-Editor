@@ -1,30 +1,20 @@
-/* eslint no-process-env: 0 global-require: 0*/
+/* eslint-disable global-require */
 const Configuration = require('./config/models');
-const bunyan = require('bunyan');
 
 /**
  * Load up config
  * @returns {Configuration}
- * @returns {Configuration.logger}
  */
 const initialize = () =>{
-    let config = {};
-
+    let localConfig = {};
     try {
-        config = Object.assign(config,require('./config/local'));
+        localConfig = require('./config/local');
     } catch (err){
-        if(err.code !== 'MODULE_NOT_FOUND'){
-            throw err;
-        }
+        // Nothing
     }
 
+    const config = Object.assign(localConfig,{});
     const configuration = new Configuration(config);
-
-    configuration.logger = bunyan({
-        name: configuration.name,
-        src: true,
-        version: configuration.version
-    });
 
     module.exports = configuration;
     return configuration;

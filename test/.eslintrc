@@ -1,7 +1,7 @@
 {
   "extends": "../.eslintrc",
   "rules": {
-    "max-nested-callbacks": [ 2, 3 ],
+    "max-nested-callbacks": 0,
     "global-require": 0,
     "no-process-env": 0
   },

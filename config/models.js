@@ -1,6 +1,6 @@
 /* eslint no-process-env: 0 */
 'use strict';
-
+const bunyan = require('bunyan');
 const pjson = require('../package.json');
 const qualities = [
     'Awful',
@@ -16,6 +16,18 @@ const qualities = [
 const highestQuality = qualities[qualities.length - 1];
 const maxSkill = 20;
 const maxHealth = 1000;
+const version = pjson.version;
+const name = pjson.name;
+
+// Used for proxyquire
+const level = pjson.logLevel || 30;
+
+const logger = bunyan({
+    name,
+    version,
+    level,
+    src: true,
+});
 
 /**
  * Game
@@ -38,19 +50,19 @@ class Game {
 
         this.skillLevel = parseInt(config.skillLevel,10);
         if(isNaN(this.skillLevel) || this.skillLevel > maxSkill){
-            console.warn(`Skill level must be a number and cannot be above "${maxSkill}", setting it to "${maxSkill}" instead`);
+            logger.warn(`Skill level must be a number and cannot be above "${maxSkill}", setting it to "${maxSkill}" instead`);
             this.skillLevel = maxSkill;
         }
 
         this.healthLevel = parseInt(config.healthLevel,10);
         if(isNaN(this.healthLevel)){
-            console.warn(`Health level must be a number, setting it to "${maxHealth}" instead`);
+            logger.warn(`Health level must be a number, setting it to "${maxHealth}" instead`);
             this.healthLevel = maxHealth;
         }
 
         this.qualityLevel = config.qualityLevel;
         if(qualities.indexOf(this.qualityLevel) === -1){
-            console.warn(`Specified quality does not exist, resetting to "${highestQuality}"`);
+            logger.warn(`Specified quality does not exist, resetting to "${highestQuality}"`);
             this.qualityLevel = highestQuality;
         }
 
@@ -105,11 +117,11 @@ class QuickActions {
         this.setWorldWar = config.setWorldWar || false;
 
         if(this.setWorldPeace && this.setWorldWar){
-            console.warn('Ignoring world peace due to world war set to `true`');
+            logger.warn('Ignoring world peace due to world war set to `true`');
         }
 
         if(this.setColonyPeace && this.setColonyWar){
-            console.warn('Ignoring colony peace due to colony war set to `true`');
+            logger.warn('Ignoring colony peace due to colony war set to `true`');
         }
     }
 }
@@ -117,11 +129,15 @@ class QuickActions {
 /**
  * @param {QuickActions} QuickActions
  * @param {Game} Game
+ * @param {String} version
+ * @param {String} name
+ * @param {bunyan} logger
  */
 class Configuration {
     constructor(config){
-        this.version = pjson.version;
-        this.name = pjson.name;
+        this.version = version;
+        this.name = name;
+        this.logger = logger;
 
         this.Game = new Game(config.gameConfig || {});
         this.QuickActions = new QuickActions(config.quickActionsConfig || {});
