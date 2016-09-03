@@ -5,14 +5,14 @@
  */
 function verifyPawnHealthProperty(pawn){
     if(!pawn.healthTracker){
-        pawn.healthTracker = [];
+        pawn.healthTracker = [{}];
     }
 
     if(!pawn.healthTracker[0].hediffSet){
-        pawn.healthTracker[0] = {hediffSet:[]};
+        pawn.healthTracker[0] = {hediffSet:[{}]};
     }
 
-    if(!pawn.healthTracker[0].hediffSet[0].hediffs){
+    if(!pawn.healthTracker[0].hediffSet[0].hediffs || !pawn.healthTracker[0].hediffSet[0].hediffs.length){
         pawn.healthTracker[0].hediffSet[0] = {hediffs:[{}]};
     }
 
@@ -64,18 +64,17 @@ module.exports = {
     addBodyInjury:(pawn,type,options) =>{
         pawn = verifyPawnHealthProperty(pawn);
         options = options || {};
-
-        let className = 'Hediff_Injury';
-        if(typeof options.ticksToDisappear === 'number'){
-            className = 'HediffWithComps';
-        }
+        let className = '';
 
         switch(type){
             case 'BloodLoss':
                 className = '';
                 break;
             default:
-                // Nothing
+                className = 'Hediff_Injury';
+                if(typeof options.ticksToDisappear === 'number'){
+                    className = 'HediffWithComps';
+                }
                 break;
         }
 
