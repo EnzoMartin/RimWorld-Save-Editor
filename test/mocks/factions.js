@@ -10,6 +10,9 @@ module.exports = [{
         },{
             other:['Faction_4'],
             goodwill:['-80']
+        },{
+            other:['Faction_0'],
+            goodwill:['0']
         }]
     }],
     tacticalMemory:[{
@@ -31,6 +34,9 @@ module.exports = [{
         },{
             other:['Faction_4'],
             goodwill:['-80']
+        },{
+            other:['Faction_0'],
+            goodwill:['0']
         }]
     }]
 },{
@@ -43,6 +49,23 @@ module.exports = [{
         },{
             other:['Faction_9'],
             goodwill:['-80']
+        },{
+            other:['Faction_0'],
+            goodwill:['0']
+        }]
+    }]
+},{
+    def:['BarClan'],
+    relations:[{
+        li:[{
+            other:['Faction_3'],
+            goodwill:['-80']
+        },{
+            other:['Faction_9'],
+            goodwill:['-80']
+        },{
+            other:['Faction_4'],
+            goodwill:['0']
         }]
     }]
 }];
