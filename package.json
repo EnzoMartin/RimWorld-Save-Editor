@@ -13,24 +13,34 @@
   ],
   "engines": {
     "node": ">=6",
-    "npm": ">=3",
-    "game": "0.14"
+    "npm": ">=3"
   },
+  "supportedVersions": [
+    "~0.15",
+    "~0.14"
+  ],
   "main": "app.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint lib/**/*.js test/**/*.js *.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "istanbul cover node_modules/mocha/bin/_mocha test/**/*.js -- --full-trace",
+    "test:watch": "node_modules/mocha/bin/_mocha --watch --full-trace",
     "dev": "node app.js | bunyan -o short",
     "start": "node app.js"
   },
   "dependencies": {
     "bunyan": "^1.8.1",
+    "semver": "^5.3.0",
     "xml2js": "^0.4.16"
   },
-  "optionalDependencies": {
-    "azure-storage": "^1.2.0"
-  },
   "devDependencies": {
-    "enzo-codestyle": "^1.0.0",
-    "eslint": "^3.2.2"
+    "enzo-codestyle": "^2.0.0",
+    "eslint": "^3.2.2",
+    "expect": "^1.20.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "nock": "^8.0.0",
+    "proxyquire": "^1.7.10",
+    "sinon": "^1.17.5"
   }
 }

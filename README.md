@@ -10,8 +10,9 @@ RimWorld save game editor
 * Set item and art health/quality
 * Mortally wound enemy faction pawns
 * Mortally wound friendly caravan animals
+* Set factions to be at war/peace with the colony/all others
 
-More to come
+More to come..
 
 ##Install
 
@@ -25,17 +26,30 @@ More to come
 ##Usage:
 
 ###Config
+Configurations are optional
+
 | Name | Default | Description |
 | ------------- | ------------- |  ------------- |
-| saveDir | | Directory of the save files (in the game menu, click Options, and then click "Open save data folder" **REQUIRED** |
-| saveName | | The save file name **REQUIRED** |
-| playerFaction | Faction_9 | Player's faction ID | 
-| skillLevel | 20 | Skill level to set colonists to |
-| healthLevel | 1000 | Health to set items to |
-| qualityLevel | Masterwork | Item quality to set for equipped items | 
-| modifiedNamePrefix | Edited | String to prefix new save with to prevent overwriting, you can set to an empty string to overwrite the file (not recommended) |
+| saveName | `Colony1.rws` | The save file name you wish to edit |
+| saveDir | | Directory of the save file, uses game default otherwise |
+| modifiedNamePrefix | `Edited` | String to prefix new save with to prevent overwriting, you can set to an empty string (`''`) to overwrite the original save file (not recommended) |
+| colonyFaction | `Faction_9` | Colony's faction name | 
+| skillLevel | `20` | Skill level to set Colonists to |
+| healthLevel | `1000` | Health to set items to |
+| qualityLevel | `Legendary` | Quality to set items to | 
+| woundHostilePawns | `true` | Incapacitates/kills enemy faction pawns except for Hive faction |
+| caravanDisaster | `false` | Sets caravan animals to be a hostile faction, often results in relation penalty |
+| upgradeArt | `true` | Upgrade all art pieces to be at designated health and quality |
+| upgradePawnSkills | `true` | Set all colonist skills to 20 |
+| upgradePawnEquipment | `true` | Upgrade all colony pawn equipment to be at designated health and quality |
+| upgradePawnApparel | `true` | Upgrade all colony pawn apparel to be at designated health and quality |
+| upgradeItems | `true` | Upgrade all items on ground to designated health and quality |
+| setColonyPeace | `false` | Set colony to at peace with all factions |
+| setColonyWar | `false` | Set colony to be at war with all factions |
+| setWorldPeace | `false` | Set all factions to be at peace with each other |
+| setWorldWar | `false` | Set all factions to be at war with each other |
 
-Copy the example [config] file in `/config/example.local.js` to `/config/local.js` and edit the settings `saveDir` and `saveName`
+Copy (or rename) the example [config] file in `/config/example.local.js` to `/config/local.js` and edit the settings `saveDir` and `saveName`
 
 ## License
 
