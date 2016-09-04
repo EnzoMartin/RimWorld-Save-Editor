@@ -41,6 +41,7 @@ const logger = bunyan({
  * @property {String} saveName
  * @property {String|Boolean} saveId
  * @property {String} modifiedName
+ * @property {String} modifiedNamePrefix
  * @property {Function} updateColonyFaction
  */
 class Game {
@@ -68,7 +69,8 @@ class Game {
 
         this.saveDir = config.saveDir || process.env.LOCALAPPDATA + '\\..\\LocalLow\\Ludeon Studios\\RimWorld\\Saves\\';
         this.saveName = config.saveName || 'Colony1.rws';
-        this.modifiedName = (typeof config.modifiedNamePrefix === 'undefined' ? 'Edited' : config.modifiedNamePrefix) + this.saveName;
+        this.modifiedNamePrefix = config.modifiedNamePrefix || 'Edited';
+        this.modifiedName = this.modifiedNamePrefix + this.saveName;
     }
 
     /**

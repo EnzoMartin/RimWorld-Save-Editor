@@ -1,4 +1,4 @@
-require('./_helper');
+require('../_helper');
 const path = require('path');
 const filePath = path.join(__dirname,'/mocks/Test.rws');
 const saveFileContents = 'savefile';

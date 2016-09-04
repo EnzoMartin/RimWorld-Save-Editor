@@ -1,4 +1,4 @@
-require('./_helper');
+require('../_helper');
 const xmlMock = '<savegame>0.14</savegame>';
 const objMock = {savegame:'0.14'};
 
@@ -6,7 +6,11 @@ const Parser = proxyquire('../lib/parser',{
     xml2js: {
         Parser:function Parser(){
             this.parseString = (str,callback) =>{
-                callback(null,objMock);
+                if(str){
+                    callback(null,objMock);
+                } else {
+                    callback(new Error('Failure'));
+                }
             };
         },
         Builder:function Builder(){
@@ -32,5 +36,14 @@ describe('invoking parser module', () =>{
         const compiled = Parser.compile(objMock);
         expect(compiled).toEqual(xmlMock);
         expect(typeof compiled).toEqual('string');
+    });
+
+    describe('with an invalid XML source', () =>{
+        it('should return the error to the callback', (done) =>{
+            Parser.parse('',(err,result) =>{
+                expect(err).toNotBe(null);
+                done();
+            });
+        });
     });
 });

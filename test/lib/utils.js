@@ -1,13 +1,13 @@
-require('./_helper');
-const pawn = require('./mocks/pawns');
-proxyquire.noPreserveCache();
-const factions = proxyquire('./mocks/factions',{});
+require('../_helper');
+const pawn = require('../mocks/pawns');
 
 const Utils = proxyquire('../lib/utils',{
-    config:{
+    '../config':{
         Game: {
-            colonyFaction: 'Faction_9'
-        }
+            colonyFaction:'Faction_9',
+            colonyFactionId:9
+        },
+        '@noCallThru': true
     }
 });
 
@@ -32,6 +32,8 @@ const game = {
     }]
 };
 
+proxyquire.noPreserveCache();
+const factions = proxyquire('./mocks/factions',{});
 
 describe('invoking utils module module', () =>{
     after(() =>{
