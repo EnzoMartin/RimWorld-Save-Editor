@@ -3,7 +3,7 @@ proxyquire.noPreserveCache();
 
 const warnSpy = expect.createSpy();
 
-const Models = proxyquire('../config/models',{
+const base = {
     '../package.json': {
         name: 'mock',
         version: 1
@@ -13,7 +13,41 @@ const Models = proxyquire('../config/models',{
             warn: warnSpy
         };
     }
+};
+
+const osx = Object.assign({},base,{
+    os: {
+        platform: () =>{
+            return 'darwin';
+        }
+    }
 });
+
+const windows = Object.assign({},base,{
+    os: {
+        platform: () =>{
+            return 'win32';
+        }
+    }
+});
+
+const linux = Object.assign({},base,{
+    os: {
+        platform: () =>{
+            return 'linux';
+        }
+    }
+});
+
+const unsupported = Object.assign({},base,{
+    os: {
+        platform: () =>{
+            return 'hal';
+        }
+    }
+});
+
+const Models = proxyquire('../config/models',base);
 
 const validGame = {
     gameConfig:{
@@ -72,6 +106,37 @@ describe('invoking models', () =>{
         expect(warnSpy).toHaveBeenCalled();
         Object.keys(validGame.gameConfig).forEach((key) =>{
             expect(typeof config.Game[key]).toNotEqual('undefined');
+        });
+    });
+
+    describe('should set a different default save path for platform', () =>{
+        beforeEach(() =>{
+            process.env.HOME = 'home/test';
+            process.env.USERNAME = 'Test';
+        });
+
+        it('Mac OSX', () =>{
+            const Models = proxyquire('../config/models',osx);
+            const config = new Models({});
+            expect(config.Game.saveDir).toInclude('~/Library/Application');
+        });
+
+        it('Windows', () =>{
+            const Models = proxyquire('../config/models',windows);
+            const config = new Models({});
+            expect(config.Game.saveDir).toInclude('Users\\Test');
+        });
+
+        it('Linux', () =>{
+            const Models = proxyquire('../config/models',linux);
+            const config = new Models({});
+            expect(config.Game.saveDir).toInclude('home/test/.config');
+        });
+
+        it('Unsupported', () =>{
+            expect(function (){
+                proxyquire('../config/models',unsupported);
+            }).toThrow(/supported/);
         });
     });
 

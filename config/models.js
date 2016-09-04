@@ -1,7 +1,10 @@
 /* eslint no-process-env: 0 */
 'use strict';
+const os = require('os');
 const bunyan = require('bunyan');
 const pjson = require('../package.json');
+
+const platform = os.platform();
 const qualities = [
     'Awful',
     'Shoddy',
@@ -28,6 +31,21 @@ const logger = bunyan({
     level,
     src: true,
 });
+
+var defaultPath = '';
+switch(platform){
+    case 'darwin':
+        defaultPath = '~/Library/Application Support/RimWorld/Saves/';
+        break;
+    case 'linux':
+        defaultPath = `${process.env.HOME}/.config/unity3d/Ludeon Studios/RimWorld/`;
+        break;
+    case 'win32':
+        defaultPath = `C:\\Users\\${process.env.USERNAME}\\AppData\\LocalLow\\Ludeon Studios\\RimWorld\\Saves\\`;
+        break;
+    default:
+        throw new Error(`Platform "${platform}" is not supported currently`);
+}
 
 /**
  * Game
@@ -67,7 +85,7 @@ class Game {
             this.qualityLevel = highestQuality;
         }
 
-        this.saveDir = config.saveDir || process.env.LOCALAPPDATA + '\\..\\LocalLow\\Ludeon Studios\\RimWorld\\Saves\\';
+        this.saveDir = config.saveDir || defaultPath;
         this.saveName = config.saveName || 'Colony1.rws';
         this.modifiedNamePrefix = config.modifiedNamePrefix || 'Edited';
         this.modifiedName = this.modifiedNamePrefix + this.saveName;
