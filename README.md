@@ -1,7 +1,7 @@
 RimWorld Save Editor
 =======================
 
-RimWorld save game editor
+RimWorld save game editor, supports Windows/OSX/Linux
 
 ##Features
 
@@ -16,7 +16,7 @@ More to come..
 
 ##Install
 
-* Download and install the latest [NodeJS][nodejs]
+* Download and install the latest [NodeJS]
 * Clone the repo
 * Follow the [Node Gyp setup guide]
 * Run `npm install` from the repo base directory
@@ -77,3 +77,4 @@ SOFTWARE.
 
 [config]:config/example.local.js
 [Node Gyp setup guide]:https://github.com/TooTallNate/node-gyp#installation
+[NodeJS]:https://nodejs.org/
