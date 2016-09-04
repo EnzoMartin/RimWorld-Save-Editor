@@ -102,7 +102,6 @@ describe('invoking models', () =>{
 
         it('should warn that actions will be ignored if there are conflicting actions set', () =>{
             const config = new Models(invalidActions);
-            console.log(invalidActions)
             expect(warnSpy).toHaveBeenCalled();
         });
     });
