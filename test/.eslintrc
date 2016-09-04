@@ -9,9 +9,8 @@
     "mocha": true
   },
     "globals": {
-        "nock": true,
         "describe": true,
-        "sinon": true,
+        "it": true,
         "expect": true,
         "proxyquire": true
     }
