@@ -8,6 +8,7 @@ const Pawn = require('../../modifiers/pawn');
 
 var pawns = {};
 var colonist = {};
+var human = {};
 var wolf = {};
 var wanderer = {};
 
@@ -26,6 +27,7 @@ describe('invoking pawn modifier',() =>{
         // Clear our any changes from the tests
         pawns = JSON.parse(JSON.stringify(pawnsSource));
         colonist = pawns.colonist;
+        human = pawns.human;
         wolf = pawns.wolf;
         wanderer = pawns.wanderer;
     });
@@ -88,6 +90,18 @@ describe('invoking pawn modifier',() =>{
         expect(colonist.equipment.primary.quality).toEqual('Shoddy');
         const modified = Pawn.setEquipmentQuality(colonist,quality);
         expect(modified.equipment.primary.quality).toEqual(quality);
+    });
+
+    it('does not modify the pawn\'s equipment health if equipment has a class', () =>{
+        expect(human.equipment.primary.health).toEqual(100);
+        const modified = Pawn.setEquipmentHealth(human,health);
+        expect(modified.equipment.primary.health).toEqual(100);
+    });
+
+    it('does not modify the pawn\'s equipment quality if equipment has a class', () =>{
+        expect(human.equipment.primary.quality).toEqual('Shoddy');
+        const modified = Pawn.setEquipmentQuality(human,quality);
+        expect(modified.equipment.primary.quality).toEqual('Shoddy');
     });
 
     it('does not modify pawn\'s equipment health with no equipment', () =>{

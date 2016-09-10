@@ -62,7 +62,15 @@ module.exports = {
             Class:'Pawn'
         },
         def:'Human',
-        faction:'Faction_3'
+        faction:'Faction_3',
+        equipment:{
+            primary:{
+                $:{Class:'ThingWithComps'},
+                def:'Gun_InfernoCannon',
+                health:100,
+                quality:'Shoddy'
+            }
+        },
     },
     centipede:{
         $:{
