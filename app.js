@@ -49,8 +49,8 @@ function processSave(err,result){
     } else {
         logger.info('Finished loading save data');
 
-        const gameMeta = result.savegame.meta[0];
-        const gameSave = result.savegame.game[0];
+        const gameMeta = result.savegame.meta;
+        const gameSave = result.savegame.game;
 
         if(Save.isSupported(gameMeta)){
             config.Game.updateColonyFaction(Utils.findPlayerColony(gameSave));

@@ -14,15 +14,11 @@ const Save = proxyquire('../lib/save',{
 });
 
 const supportedMock = {
-    gameVersion:[
-        '0.14.1000 rev1'
-    ]
+    gameVersion:'0.14.1000 rev1'
 };
 
 const unsupportedMock = {
-    gameVersion:[
-        '0.13.1000 rev0'
-    ]
+    gameVersion:'0.13.1000 rev0'
 };
 
 const corruptedMock = {};
