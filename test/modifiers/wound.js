@@ -78,4 +78,15 @@ describe('invoking wound modifier',() =>{
         expect(modified.healthTracker.hediffSet.hediffs.li[0].ticksSinceCreation).toEqual(500);
         expect(modified.healthTracker.hediffSet.hediffs.li[0].painFactor).toEqual(10);
     });
+
+    it('adds multiple injuries to the pawn', () =>{
+        expect(colonist.healthTracker.hediffSet.hediffs.length).toEqual('0');
+        let modified = Wound.addBodyInjury(colonist,'Cut');
+        modified = Wound.addBodyInjury(modified,'BloodLoss');
+        modified = Wound.addBodyInjury(modified,'GunShot');
+        expect(modified.healthTracker.hediffSet.hediffs.li.length).toEqual('3');
+        expect(modified.healthTracker.hediffSet.hediffs.li[0].def).toEqual('Cut');
+        expect(modified.healthTracker.hediffSet.hediffs.li[1].def).toEqual('BloodLoss');
+        expect(modified.healthTracker.hediffSet.hediffs.li[2].def).toEqual('GunShot');
+    });
 });
