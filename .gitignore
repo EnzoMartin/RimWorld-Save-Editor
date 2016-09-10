@@ -6,7 +6,7 @@ pids
 
 lib-cov
 coverage
-
+temp
 .grunt
 .lock-wscript
 build/Release
