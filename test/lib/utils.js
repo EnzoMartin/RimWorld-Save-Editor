@@ -12,24 +12,24 @@ const Utils = proxyquire('../lib/utils',{
 });
 
 const game = {
-    scenario: [{
-        playerFaction: [{
-            factionDef: ['PlayerColony']
-        }]
-    }],
-    world: [{
-        factionManager: [{
-            allFactions: [{
+    scenario: {
+        playerFaction: {
+            factionDef: 'PlayerColony'
+        }
+    },
+    world: {
+        factionManager: {
+            allFactions: {
                 li: [{
-                    def: ['Outlander'],
-                    loadID: [1]
+                    def: 'Outlander',
+                    loadID: 1
                 },{
-                    def: ['PlayerColony'],
-                    loadID: [2]
+                    def: 'PlayerColony',
+                    loadID: 2
                 }]
-            }]
-        }]
-    }]
+            }
+        }
+    }
 };
 
 proxyquire.noPreserveCache();
@@ -75,7 +75,7 @@ describe('invoking utils module module', () =>{
     it('should return the colony faction object', () =>{
         const colonyFaction = Utils.getColonyFaction(factions);
         expect(typeof colonyFaction).toEqual('object');
-        expect(colonyFaction.loadID[0]).toEqual('9');
+        expect(colonyFaction.loadID).toEqual('9');
     });
 
     it('should return the enemy factions', () =>{

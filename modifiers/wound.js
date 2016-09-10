@@ -5,19 +5,21 @@
  */
 function verifyPawnHealthProperty(pawn){
     if(!pawn.healthTracker){
-        pawn.healthTracker = [{}];
+        pawn.healthTracker = {};
     }
 
-    if(!pawn.healthTracker[0].hediffSet){
-        pawn.healthTracker[0] = {hediffSet:[{}]};
+    if(!pawn.healthTracker.hediffSet){
+        pawn.healthTracker = {hediffSet:{}};
     }
 
-    if(!pawn.healthTracker[0].hediffSet[0].hediffs || !pawn.healthTracker[0].hediffSet[0].hediffs.length){
-        pawn.healthTracker[0].hediffSet[0] = {hediffs:[{}]};
+    if(!pawn.healthTracker.hediffSet.hediffs){
+        pawn.healthTracker.hediffSet = {hediffs:{}};
     }
 
-    if(!pawn.healthTracker[0].hediffSet[0].hediffs[0].li){
-        pawn.healthTracker[0].hediffSet[0].hediffs[0] = {li:[]};
+    if(!pawn.healthTracker.hediffSet.hediffs.li){
+        pawn.healthTracker.hediffSet.hediffs = {li:[]};
+    } else if(!Array.isArray(pawn.healthTracker.hediffSet.hediffs.li)){
+        pawn.healthTracker.hediffSet.hediffs.li = [pawn.healthTracker.hediffSet.hediffs.li];
     }
 
     return pawn;
@@ -30,7 +32,7 @@ function verifyPawnHealthProperty(pawn){
  * @returns {*}
  */
 function addHediff(pawn,injury){
-    pawn.healthTracker[0].hediffSet[0].hediffs[0].li.push(injury);
+    pawn.healthTracker.hediffSet.hediffs.li.push(injury);
     return pawn;
 }
 

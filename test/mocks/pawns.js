@@ -3,100 +3,108 @@ module.exports = {
         $:{
             Class:'Pawn'
         },
-        def:['Human'],
-        faction:['Faction_9'],
-        skills: [{
-            skills:[{
+        def:'Human',
+        faction:'Faction_9',
+        skills: {
+            skills:{
                 li:[{
-                    def:['Shooting'],
-                    level: ['12'],
-                    passion: ['Minor'],
-                    xpSinceLastLevel:['306.0838']
+                    def:'Shooting',
+                    level: 12,
+                    passion: 'Minor',
+                    xpSinceLastLevel:306.0838
                 },{
-                    def:['Melee'],
-                    level: ['5'],
-                    passion: ['Major'],
-                    xpSinceLastLevel:['460.6791']
+                    def:'Melee',
+                    level: 5,
+                    passion: 'Major',
+                    xpSinceLastLevel:460.6791
                 }]
-            }]
-        }],
-        apparel:[{
-            wornApparel:[{
+            }
+        },
+        apparel:{
+            wornApparel:{
                 li:[{
-                    def:['Apparel_BasicShirt'],
-                    health:['100'],
-                    stackCount:['1'],
-                    stuff:['Synthread'],
-                    quality:['Normal']
+                    def:'Apparel_BasicShirt',
+                    health:100,
+                    stackCount:1,
+                    stuff:'Synthread',
+                    quality:'Normal'
                 },{
-                    def:['Apparel_Pants'],
-                    health:['50'],
-                    stackCount:['1'],
-                    stuff:['Synthread'],
-                    quality:['Shoddy']
+                    def:'Apparel_Pants',
+                    health:50,
+                    stackCount:1,
+                    stuff:'Synthread',
+                    quality:'Shoddy'
                 }]
-            }],
-            lastApparelWearoutTick:['250']
-        }],
-        equipment:[{
-            primary:[{
-                def:['Gun_InfernoCannon'],
-                health:['100'],
-                quality:['Shoddy']
-            }]
-        }],
-        healthTracker:[{
-            hediffSet:[{
+            },
+            lastApparelWearoutTick:250
+        },
+        equipment:{
+            primary:{
+                def:'Gun_InfernoCannon',
+                health:100,
+                quality:'Shoddy'
+            }
+        },
+        healthTracker:{
+            hediffSet:{
                 hediffs:[]
-            }],
-            surgeryBills:[{
+            },
+            surgeryBills:{
                 bills:[]
-            }],
-            immunity:[{
+            },
+            immunity:{
                 imList:[]
-            }]
-        }]
+            }
+        }
     },
     human:{
         $:{
             Class:'Pawn'
         },
-        def:['Human'],
-        faction:['Faction_3']
+        def:'Human',
+        faction:'Faction_3',
+        equipment:{
+            primary:{
+                $:{Class:'ThingWithComps'},
+                def:'Gun_InfernoCannon',
+                health:100,
+                quality:'Shoddy'
+            }
+        },
     },
     centipede:{
         $:{
             Class:'Pawn'
         },
-        def:['Mechanoid_Centipede'],
-        faction:['Faction_2']
+        def:'Mechanoid_Centipede',
+        faction:'Faction_2'
     },
     wanderer:{
         $:{
             Class:'Pawn'
         },
-        def:['Human']
+        def:'Human'
     },
     wolf:{
         $:{
             Class:'Pawn'
         },
-        def:['Wolf'],
-        faction:['Faction_3'],
-        equipment:[{
+        def:'Wolf',
+        faction:'Faction_3',
+        equipment:{
             $: {
-                IsNull:'True'
+                IsNull:true
             }
-        }],
-        apparel:[{
+        },
+        apparel:{
             $: {
-                IsNull:'True'
+                IsNull:true
             }
-        }],
-        skills:[{
+        },
+        skills:{
             $: {
-                IsNull:'True'
+                IsNull:true
             }
-        }]
+        }
     }
 };

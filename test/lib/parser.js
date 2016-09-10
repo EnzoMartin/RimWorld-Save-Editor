@@ -4,6 +4,14 @@ const objMock = {savegame:'0.14'};
 
 const Parser = proxyquire('../lib/parser',{
     xml2js: {
+        processors:{
+            parseBooleans: (val) =>{
+                return val;
+            },
+            parseNumbers: (val) =>{
+                return false;
+            }
+        },
         Parser:function Parser(){
             this.parseString = (str,callback) =>{
                 if(str){

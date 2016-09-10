@@ -9,12 +9,12 @@ function createRelation(targetFaction,goodwill,hostile){
     hostile = hostile || goodwill < -79;
 
     const relation = {
-        other: [targetFaction],
-        goodwill: [goodwill]
+        other: targetFaction,
+        goodwill
     };
 
     if(hostile){
-        relation.hostile = ['True'];
+        relation.hostile = true;
     }
 
     return relation;
@@ -31,12 +31,12 @@ module.exports = {
      */
     setOtherRelation: (faction,targetFactionId,goodwill,hostile) =>{
         const targetFaction = isNaN(parseInt(targetFactionId,10)) ? targetFactionId : 'Faction_' + targetFactionId;
-        const factionIndex = faction.relations[0].li.findIndex((relation) =>{
-            return relation.other[0] === targetFaction;
+        const factionIndex = faction.relations.li.findIndex((relation) =>{
+            return relation.other === targetFaction;
         });
 
         if(factionIndex !== -1){
-            faction.relations[0].li[factionIndex] = createRelation(targetFaction,goodwill,hostile);
+            faction.relations.li[factionIndex] = createRelation(targetFaction,goodwill,hostile);
         }
 
         return faction;
@@ -49,8 +49,8 @@ module.exports = {
      * @returns {*}
      */
     setSelfRelations(faction,goodwill,hostile){
-        faction.relations[0].li = faction.relations[0].li.map((relation) =>{
-            return createRelation(relation.other[0],goodwill,hostile);
+        faction.relations.li = faction.relations.li.map((relation) =>{
+            return createRelation(relation.other,goodwill,hostile);
         });
 
         return faction;
@@ -74,9 +74,9 @@ module.exports = {
      * @returns {Object}
      */
     clearTacticalMemory: (faction) =>{
-        faction.tacticalMemory = [{
+        faction.tacticalMemory = {
             traps:[]
-        }];
+        };
 
         return faction;
     }

@@ -7,7 +7,7 @@ module.exports = {
      */
     setHealth:(thing,health) =>{
         if(thing.health){
-            thing.health = [health];
+            thing.health = health;
         }
         return thing;
     },
@@ -19,7 +19,7 @@ module.exports = {
      */
     setQuality:(thing,quality) =>{
         if(thing.quality){
-            thing.quality = [quality];
+            thing.quality = quality;
         }
         return thing;
     }

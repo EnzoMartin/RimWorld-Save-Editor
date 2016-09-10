@@ -8,11 +8,11 @@ module.exports = {
      * @returns {Object}
      */
     setSkills:(thing,level) =>{
-        if(thing.skills && thing.skills[0].skills){
-            const skills = thing.skills[0].skills[0].li;
+        if(thing.skills && thing.skills.skills){
+            const skills = thing.skills.skills.li;
 
-            thing.skills[0].skills[0].li = skills.map((item) =>{
-                item.level = [level];
+            thing.skills.skills.li = skills.map((item) =>{
+                item.level = level;
                 delete item.xpSinceLastLevel;
 
                 return item;
@@ -27,9 +27,9 @@ module.exports = {
      * @returns {Object}
      */
     setApparelHealth:(thing,health) =>{
-        if(thing.apparel && thing.apparel[0].wornApparel && thing.apparel[0].wornApparel[0].li){
-            const apparel = thing.apparel[0].wornApparel[0].li;
-            thing.apparel[0].wornApparel[0].li = apparel.map((item) =>{
+        if(thing.apparel && thing.apparel.wornApparel && thing.apparel.wornApparel.li){
+            const apparel = Array.isArray(thing.apparel.wornApparel.li) ? thing.apparel.wornApparel.li : [thing.apparel.wornApparel.li];
+            thing.apparel.wornApparel.li = apparel.map((item) =>{
                 return Item.setHealth(item,health);
             });
         }
@@ -42,9 +42,9 @@ module.exports = {
      * @returns {Object}
      */
     setApparelQuality:(thing,quality) =>{
-        if(thing.apparel && thing.apparel[0].wornApparel && thing.apparel[0].wornApparel[0].li){
-            const apparel = thing.apparel[0].wornApparel[0].li;
-            thing.apparel[0].wornApparel[0].li = apparel.map((item) =>{
+        if(thing.apparel && thing.apparel.wornApparel && thing.apparel.wornApparel.li){
+            const apparel = Array.isArray(thing.apparel.wornApparel.li) ? thing.apparel.wornApparel.li : [thing.apparel.wornApparel.li];
+            thing.apparel.wornApparel.li = apparel.map((item) =>{
                 return Item.setQuality(item,quality);
             });
         }
@@ -57,14 +57,11 @@ module.exports = {
      * @returns {Object}
      */
     setEquipmentHealth:(thing,health) =>{
-        if(thing.equipment && thing.equipment[0] && thing.equipment[0].primary){
-            const equipment = thing.equipment[0].primary;
-            thing.equipment[0].primary = equipment.map((item) =>{
-                if(!item.$){
-                    item = Item.setHealth(item,health);
-                }
-                return item;
-            });
+        if(thing.equipment && thing.equipment && thing.equipment.primary){
+            const equipment = thing.equipment.primary;
+            if(!equipment.$){
+                thing.equipment.primary = Item.setHealth(equipment,health);
+            }
         }
         return thing;
     },
@@ -75,14 +72,11 @@ module.exports = {
      * @returns {Object}
      */
     setEquipmentQuality:(thing,quality) =>{
-        if(thing.equipment && thing.equipment[0] && thing.equipment[0].primary){
-            const equipment = thing.equipment[0].primary;
-            thing.equipment[0].primary = equipment.map((item) =>{
-                if(!item.$){
-                    item = Item.setQuality(item,quality);
-                }
-                return item;
-            });
+        if(thing.equipment && thing.equipment && thing.equipment.primary){
+            const equipment = thing.equipment.primary;
+            if(!equipment.$){
+                thing.equipment.primary = Item.setQuality(equipment,quality);
+            }
         }
         return thing;
     },
@@ -93,7 +87,7 @@ module.exports = {
      * @returns {Object}
      */
     setFaction:(thing,faction) =>{
-        thing.faction = [typeof faction === 'number' ? 'Faction_' + faction : faction];
+        thing.faction = typeof faction === 'number' ? 'Faction_' + faction : faction;
         return thing;
     },
     /**
@@ -102,7 +96,7 @@ module.exports = {
      * @returns {String}
      */
     getFaction:(thing) =>{
-        return thing.faction ? thing.faction[0] : 'Faction_0';
+        return thing.faction ? thing.faction : 'Faction_0';
     },
     /**
      * Return pawn's faction ID
@@ -112,7 +106,7 @@ module.exports = {
     getFactionId:(thing) =>{
         let faction = 0;
         if(thing.faction){
-            const arr = thing.faction[0].split('_');
+            const arr = thing.faction.split('_');
             faction = arr[arr.length - 1];
         }
         return faction;
