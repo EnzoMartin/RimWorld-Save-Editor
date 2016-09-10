@@ -18,6 +18,8 @@ function verifyPawnHealthProperty(pawn){
 
     if(!pawn.healthTracker.hediffSet.hediffs.li){
         pawn.healthTracker.hediffSet.hediffs = {li:[]};
+    } else if(!Array.isArray(pawn.healthTracker.hediffSet.hediffs.li)){
+        pawn.healthTracker.hediffSet.hediffs.li = [pawn.healthTracker.hediffSet.hediffs.li];
     }
 
     return pawn;

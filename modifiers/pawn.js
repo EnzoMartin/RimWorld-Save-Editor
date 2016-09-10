@@ -28,7 +28,7 @@ module.exports = {
      */
     setApparelHealth:(thing,health) =>{
         if(thing.apparel && thing.apparel.wornApparel && thing.apparel.wornApparel.li){
-            const apparel = thing.apparel.wornApparel.li;
+            const apparel = Array.isArray(thing.apparel.wornApparel.li) ? thing.apparel.wornApparel.li : [thing.apparel.wornApparel.li];
             thing.apparel.wornApparel.li = apparel.map((item) =>{
                 return Item.setHealth(item,health);
             });
@@ -43,7 +43,7 @@ module.exports = {
      */
     setApparelQuality:(thing,quality) =>{
         if(thing.apparel && thing.apparel.wornApparel && thing.apparel.wornApparel.li){
-            const apparel = thing.apparel.wornApparel.li;
+            const apparel = Array.isArray(thing.apparel.wornApparel.li) ? thing.apparel.wornApparel.li : [thing.apparel.wornApparel.li];
             thing.apparel.wornApparel.li = apparel.map((item) =>{
                 return Item.setQuality(item,quality);
             });
