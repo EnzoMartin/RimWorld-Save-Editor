@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "bunyan": "^1.8.1",
+    "rimworld-definitions-nodejs": "^0.15.1284",
     "semver": "^5.3.0"
   },
   "devDependencies": {

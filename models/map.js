@@ -1,16 +1,12 @@
-const Map = require('./map');
-const World = require('./world');
+const Things = require('./things');
 
-class Game {
+class Map {
     constructor(items){
         Object.keys(items).forEach((key) =>{
             const item = items[key];
             switch(key){
-                case 'world':
-                    this[key] = new World(item);
-                    break;
-                case 'map':
-                    this[key] = new Map(item);
+                case 'things':
+                    this[key] = new Things(item);
                     break;
                 default:
                     this[key] = item;
@@ -20,4 +16,4 @@ class Game {
     }
 }
 
-module.exports = Game;
+module.exports = Map;

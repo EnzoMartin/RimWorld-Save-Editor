@@ -2,16 +2,17 @@ const semver = require('semver');
 const config = require('../config');
 
 class Meta {
-    constructor(meta){
-        Object.keys(meta).forEach((key) =>{
+    constructor(items){
+        Object.keys(items).forEach((key) =>{
+            const item = items[key];
             switch(key){
                 case 'modIds':
                 case 'modNames':
-                    const li = meta[key].li;
+                    const li = item.li;
                     this[key] = typeof li === 'string' ? [li] : li;
                     break;
                 default:
-                    this[key] = meta[key];
+                    this[key] = item;
                     break;
             }
         });

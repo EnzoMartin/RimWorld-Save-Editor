@@ -50,6 +50,6 @@ const save = module.exports.fromObject(testFile.savegame,(err,item) =>{
     if(err){
         console.error(err);
     } else {
-        console.log(Object.keys(item.game.map));
+        console.log(item.game);
     }
 });
