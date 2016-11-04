@@ -3,7 +3,7 @@ const World = require('./world');
 
 class Game {
     constructor(items){
-        Object.keys(items).forEach((key) =>{
+        Object.keys(items).forEach((key) => {
             const item = items[key];
             switch(key){
                 case 'world':

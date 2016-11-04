@@ -5,7 +5,7 @@ module.exports = {
      * @param {Number} health
      * @returns {*}
      */
-    setHealth:(thing,health) =>{
+    setHealth:(thing,health) => {
         if(thing.health){
             thing.health = [health];
         }
@@ -17,7 +17,7 @@ module.exports = {
      * @param {String} quality
      * @returns {*}
      */
-    setQuality:(thing,quality) =>{
+    setQuality:(thing,quality) => {
         if(thing.quality){
             thing.quality = [quality];
         }

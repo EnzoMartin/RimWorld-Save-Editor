@@ -29,9 +29,9 @@ module.exports = {
      * @param {Boolean} [hostile]
      * @returns {*}
      */
-    setOtherRelation: (faction,targetFactionId,goodwill,hostile) =>{
-        const targetFaction = isNaN(parseInt(targetFactionId,10)) ? targetFactionId : 'Faction_' + targetFactionId;
-        const factionIndex = faction.relations[0].li.findIndex((relation) =>{
+    setOtherRelation: (faction,targetFactionId,goodwill,hostile) => {
+        const targetFaction = isNaN(parseInt(targetFactionId,10)) ? targetFactionId : `Faction_${targetFactionId}`;
+        const factionIndex = faction.relations[0].li.findIndex((relation) => {
             return relation.other[0] === targetFaction;
         });
 
@@ -49,7 +49,7 @@ module.exports = {
      * @returns {*}
      */
     setSelfRelations(faction,goodwill,hostile){
-        faction.relations[0].li = faction.relations[0].li.map((relation) =>{
+        faction.relations[0].li = faction.relations[0].li.map((relation) => {
             return createRelation(relation.other[0],goodwill,hostile);
         });
 
@@ -64,7 +64,7 @@ module.exports = {
      * @returns {*}
      */
     setRelations(factions,targetFactionId,goodwill,hostile){
-        return factions.map((faction) =>{
+        return factions.map((faction) => {
             return this.setOtherRelation(faction,targetFactionId,goodwill,hostile);
         });
     },
@@ -73,7 +73,7 @@ module.exports = {
      * @param {Object} faction
      * @returns {Object}
      */
-    clearTacticalMemory: (faction) =>{
+    clearTacticalMemory: (faction) => {
         faction.tacticalMemory = [{
             traps:[]
         }];

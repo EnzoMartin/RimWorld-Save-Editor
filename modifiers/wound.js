@@ -61,7 +61,7 @@ module.exports = {
      * @param {Boolean} [options.isOld]
      * @returns {*}
      */
-    addBodyInjury:(pawn,type,options) =>{
+    addBodyInjury:(pawn,type,options) => {
         pawn = verifyPawnHealthProperty(pawn);
         options = options || {};
         let className = '';

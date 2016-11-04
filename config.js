@@ -26,7 +26,7 @@ class Configuration {
  * Load up config
  * @returns {Configuration}
  */
-const initialize = () =>{
+const initialize = () => {
     const configuration = new Configuration({});
 
     module.exports = configuration;

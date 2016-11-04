@@ -1,8 +1,12 @@
 const FactionManager = require('./faction/manager');
+const UniqueIDsManager = require('./ids');
+const Singleton = require('singleton-class');
 
-class World {
+class World extends Singleton {
     constructor(items){
-        Object.keys(items).forEach((key) =>{
+        super();
+
+        Object.keys(items).forEach((key) => {
             const item = items[key];
             switch(key){
                 case 'info':
@@ -15,6 +19,9 @@ class World {
                     break;
                 case 'factionManager':
                     this[key] = new FactionManager(item);
+                    break;
+                case 'uniqueIDsManager':
+                    this[key] = new UniqueIDsManager(item);
                     break;
                 default:
                     this[key] = item;

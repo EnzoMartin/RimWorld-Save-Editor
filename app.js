@@ -46,7 +46,7 @@ module.exports = {
 
 // Temp
 const testFile = require('./temp/test.js');
-const save = module.exports.fromObject(testFile.savegame,(err,item) =>{
+const save = module.exports.fromObject(testFile.savegame,(err,item) => {
     if(err){
         console.error(err);
     } else {

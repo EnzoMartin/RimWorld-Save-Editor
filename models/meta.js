@@ -3,7 +3,7 @@ const config = require('../config');
 
 class Meta {
     constructor(items){
-        Object.keys(items).forEach((key) =>{
+        Object.keys(items).forEach((key) => {
             const item = items[key];
             switch(key){
                 case 'modIds':
@@ -28,7 +28,7 @@ class Meta {
         try {
             // Get the major and minor version of the save game
             const saveVersion = save.meta.gameVersion.split(' ')[0];
-            supported = config.supportedVersions.findIndex((version) =>{
+            supported = config.supportedVersions.findIndex((version) => {
                 return semver.satisfies(saveVersion,version);
             }) !== -1;
         } catch (err){

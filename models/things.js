@@ -2,11 +2,11 @@ const Pawn = require('./thing/pawn');
 
 class Things {
     constructor(items){
-        this.thing = items.thing.map((item) =>{
+        this.thing = items.thing.map((item) => {
             let newItem = {};
 
             try {
-                let test = item.def[0];
+                const test = item.def[0];
             } catch (err){
                 console.error(item);
             }

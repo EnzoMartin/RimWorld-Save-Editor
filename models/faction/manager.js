@@ -1,6 +1,6 @@
 class FactionManager {
     constructor(items){
-        Object.keys(items).forEach((key) =>{
+        Object.keys(items).forEach((key) => {
             const item = items[key];
             switch(key){
                 default:

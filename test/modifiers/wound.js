@@ -4,19 +4,19 @@ proxyquire.noPreserveCache();
 const pawnsSource = proxyquire('./mocks/pawns',{});
 const Wound = require('../../modifiers/wound');
 
-var pawns = {};
-var colonist = {};
-var wolf = {};
-var wanderer = {};
+let pawns = {};
+let colonist = {};
+let wolf = {};
+let wanderer = {};
 
 const severity = 15;
 
-describe('invoking wound modifier',() =>{
-    after(() =>{
+describe('invoking wound modifier',() => {
+    after(() => {
         proxyquire.preserveCache();
     });
 
-    beforeEach(() =>{
+    beforeEach(() => {
         // Clear our any changes from the tests
         pawns = JSON.parse(JSON.stringify(pawnsSource));
         colonist = pawns.colonist;
@@ -24,7 +24,7 @@ describe('invoking wound modifier',() =>{
         wanderer = pawns.wanderer;
     });
 
-    it('adds blood loss to the pawn', () =>{
+    it('adds blood loss to the pawn', () => {
         expect(colonist.healthTracker[0].hediffSet[0].hediffs.length).toEqual('0');
         const modified = Wound.addBloodLoss(colonist);
         expect(modified.healthTracker[0].hediffSet[0].hediffs.length).toEqual('1');
@@ -32,7 +32,7 @@ describe('invoking wound modifier',() =>{
         expect(typeof modified.healthTracker[0].hediffSet[0].hediffs[0].li[0].severity).toEqual('number');
     });
 
-    it('adds blood loss with severity to the pawn', () =>{
+    it('adds blood loss with severity to the pawn', () => {
         expect(colonist.healthTracker[0].hediffSet[0].hediffs.length).toEqual('0');
         const modified = Wound.addBloodLoss(colonist,severity);
         expect(modified.healthTracker[0].hediffSet[0].hediffs.length).toEqual('1');
@@ -40,7 +40,7 @@ describe('invoking wound modifier',() =>{
         expect(modified.healthTracker[0].hediffSet[0].hediffs[0].li[0].severity).toEqual(severity);
     });
 
-    it('adds blood loss to the pawn with no health tracker property', () =>{
+    it('adds blood loss to the pawn with no health tracker property', () => {
         expect(typeof wolf.healthTracker).toEqual('undefined');
         const modified = Wound.addBloodLoss(wolf);
         expect(modified.healthTracker[0].hediffSet[0].hediffs.length).toEqual('1');
@@ -48,7 +48,7 @@ describe('invoking wound modifier',() =>{
         expect(typeof modified.healthTracker[0].hediffSet[0].hediffs[0].li[0].severity).toEqual('number');
     });
 
-    it('adds an injury without comps to the pawn', () =>{
+    it('adds an injury without comps to the pawn', () => {
         expect(colonist.healthTracker[0].hediffSet[0].hediffs.length).toEqual('0');
         const modified = Wound.addBodyInjury(colonist,'Cut');
         expect(modified.healthTracker[0].hediffSet[0].hediffs.length).toEqual('1');
@@ -57,7 +57,7 @@ describe('invoking wound modifier',() =>{
         expect(typeof modified.healthTracker[0].hediffSet[0].hediffs[0].li[0].severity).toEqual('number');
     });
 
-    it('adds an injury with comps to the pawn', () =>{
+    it('adds an injury with comps to the pawn', () => {
         expect(colonist.healthTracker[0].hediffSet[0].hediffs.length).toEqual('0');
         const modified = Wound.addBodyInjury(colonist,'Cut',{ticksToDisappear:500});
         expect(modified.healthTracker[0].hediffSet[0].hediffs.length).toEqual('1');
@@ -66,7 +66,7 @@ describe('invoking wound modifier',() =>{
         expect(modified.healthTracker[0].hediffSet[0].hediffs[0].li[0].ticksToDisappear).toEqual(500);
     });
 
-    it('adds an injury with extra options and without comps to the pawn', () =>{
+    it('adds an injury with extra options and without comps to the pawn', () => {
         expect(colonist.healthTracker[0].hediffSet[0].hediffs.length).toEqual('0');
         const modified = Wound.addBodyInjury(colonist,'Cut',{
             ticksSinceCreation: 500,

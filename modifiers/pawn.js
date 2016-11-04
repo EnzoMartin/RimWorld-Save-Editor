@@ -7,11 +7,11 @@ module.exports = {
      * @param {Number} level
      * @returns {Object}
      */
-    setSkills:(thing,level) =>{
+    setSkills:(thing,level) => {
         if(thing.skills && thing.skills[0].skills){
             const skills = thing.skills[0].skills[0].li;
 
-            thing.skills[0].skills[0].li = skills.map((item) =>{
+            thing.skills[0].skills[0].li = skills.map((item) => {
                 item.level = [level];
                 delete item.xpSinceLastLevel;
 
@@ -26,10 +26,10 @@ module.exports = {
      * @param {Number} health
      * @returns {Object}
      */
-    setApparelHealth:(thing,health) =>{
+    setApparelHealth:(thing,health) => {
         if(thing.apparel && thing.apparel[0].wornApparel && thing.apparel[0].wornApparel[0].li){
             const apparel = thing.apparel[0].wornApparel[0].li;
-            thing.apparel[0].wornApparel[0].li = apparel.map((item) =>{
+            thing.apparel[0].wornApparel[0].li = apparel.map((item) => {
                 return Item.setHealth(item,health);
             });
         }
@@ -41,10 +41,10 @@ module.exports = {
      * @param {String} quality
      * @returns {Object}
      */
-    setApparelQuality:(thing,quality) =>{
+    setApparelQuality:(thing,quality) => {
         if(thing.apparel && thing.apparel[0].wornApparel && thing.apparel[0].wornApparel[0].li){
             const apparel = thing.apparel[0].wornApparel[0].li;
-            thing.apparel[0].wornApparel[0].li = apparel.map((item) =>{
+            thing.apparel[0].wornApparel[0].li = apparel.map((item) => {
                 return Item.setQuality(item,quality);
             });
         }
@@ -56,10 +56,10 @@ module.exports = {
      * @param {Number} health
      * @returns {Object}
      */
-    setEquipmentHealth:(thing,health) =>{
+    setEquipmentHealth:(thing,health) => {
         if(thing.equipment && thing.equipment[0] && thing.equipment[0].primary){
             const equipment = thing.equipment[0].primary;
-            thing.equipment[0].primary = equipment.map((item) =>{
+            thing.equipment[0].primary = equipment.map((item) => {
                 if(!item.$){
                     item = Item.setHealth(item,health);
                 }
@@ -74,10 +74,10 @@ module.exports = {
      * @param {String} quality
      * @returns {Object}
      */
-    setEquipmentQuality:(thing,quality) =>{
+    setEquipmentQuality:(thing,quality) => {
         if(thing.equipment && thing.equipment[0] && thing.equipment[0].primary){
             const equipment = thing.equipment[0].primary;
-            thing.equipment[0].primary = equipment.map((item) =>{
+            thing.equipment[0].primary = equipment.map((item) => {
                 if(!item.$){
                     item = Item.setQuality(item,quality);
                 }
@@ -92,8 +92,8 @@ module.exports = {
      * @param {String|Number} faction Accepts either an ID or a string like Faction_0
      * @returns {Object}
      */
-    setFaction:(thing,faction) =>{
-        thing.faction = [typeof faction === 'number' ? 'Faction_' + faction : faction];
+    setFaction:(thing,faction) => {
+        thing.faction = [typeof faction === 'number' ? `Faction_${faction}` : faction];
         return thing;
     },
     /**
@@ -101,7 +101,7 @@ module.exports = {
      * @param {Object} thing
      * @returns {String}
      */
-    getFaction:(thing) =>{
+    getFaction:(thing) => {
         return thing.faction ? thing.faction[0] : 'Faction_0';
     },
     /**
@@ -109,7 +109,7 @@ module.exports = {
      * @param {Object} thing
      * @returns {Number}
      */
-    getFactionId:(thing) =>{
+    getFactionId:(thing) => {
         let faction = 0;
         if(thing.faction){
             const arr = thing.faction[0].split('_');
