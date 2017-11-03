@@ -5,6 +5,7 @@ jobs:
       - image: node:8.6
     steps:
       - checkout
+      - run: mkdir ~/junit
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
