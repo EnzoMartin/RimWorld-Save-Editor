@@ -33,7 +33,8 @@
     "lint:fix": "eslint --fix .",
     "test": "nyc mocha --full-trace --recursive",
     "test:watch": "nyc mocha --full-trace --recursive -w",
-    "dev": "node app.js | bunyan -o short -color",
+    "test:ci": "nyc mocha --full-trace --recursive -R mocha-junit-reporter > test-results.xml && nyc report --reporter=lcov",
+    "dev": "node app.js | bunyan -o short --color",
     "start": "node app.js"
   },
   "dependencies": {
