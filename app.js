@@ -15,41 +15,41 @@ const pawn = require('./modifiers/pawn');
 const wound = require('./modifiers/wound');
 
 class SaveGame {
-    constructor(save){
-        this.meta = new Meta(save.meta);
-        this.game = new Game(save.game);
-    };
+  constructor(save){
+    this.meta = new Meta(save.meta);
+    this.game = new Game(save.game);
+  };
 }
 
 function verify(save){
-    let err = null;
+  let err = null;
 
-    if(!Meta.isSupported(save)){
-        err = new Error(`Game version "${Meta.extractVersion(save)}" is not supported`);
-    }
+  if(!Meta.isSupported(save)){
+    err = new Error(`Game version "${Meta.extractVersion(save)}" is not supported`);
+  }
 
-    return err;
+  return err;
 }
 
 module.exports = {
-    fromObject(save,callback){
-        const err = verify(save);
-        let construct = null;
+  fromObject(save,callback){
+    const err = verify(save);
+    let construct = null;
 
-        if(!err){
-            construct = new SaveGame(save);
-        }
-
-        callback(err,construct);
+    if(!err){
+      construct = new SaveGame(save);
     }
+
+    callback(err,construct);
+  }
 };
 
 // Temp
 const testFile = require('./temp/test.js');
 const save = module.exports.fromObject(testFile.savegame,(err,item) => {
-    if(err){
-        console.error(err);
-    } else {
-        console.log(item.game);
-    }
+  if(err){
+    console.error(err);
+  } else {
+    console.log(item.game);
+  }
 });

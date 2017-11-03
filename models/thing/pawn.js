@@ -1,18 +1,18 @@
 const Apparel = require('./apparel');
 
 class Pawn {
-    constructor(items){
-        Object.keys(items).forEach((key) => {
-            const item = items[key];
-            switch(key){
-                default:
-                    this[key] = item;
-                    break;
-            }
-        });
-    }
+  constructor(items){
+    Object.keys(items).forEach((key) => {
+      const item = items[key];
+      switch(key){
+        default:
+          this[key] = item;
+          break;
+      }
+    });
+  }
 
-    /**
+  /**
      * Set the pawn name
      * @param {Object} names
      * @param {String} [names.name] Used for pawns that have only 1 name
@@ -21,51 +21,51 @@ class Pawn {
      * @param {String} [names.last] Used for pawns that have 3 names
      * @param {Function} callback
      */
-    setName(names,callback){
-        let err = null;
-        switch(this.name.$.Class){
-            case 'NameSingle':
-                if(names.name){
-                    const num = this.name.name.match(/\d+/g);
-                    this.name.name = names.name;
+  setName(names,callback){
+    let err = null;
+    switch(this.name.$.Class){
+      case 'NameSingle':
+        if(names.name){
+          const num = this.name.name.match(/\d+/g);
+          this.name.name = names.name;
 
-                    if(this.name.numerical && !(/\d/).test(this.name.name)){
-                        this.name.name += ` ${num[0]}`;
-                    }
-                } else {
-                    err = new Error('Missing `name` property');
-                }
-                break;
-            case 'NameTriple':
-                this.name.first = names.first || this.name.first;
-                this.name.nick = names.nick || this.name.nick;
-                this.name.last = names.last || this.name.last;
-                break;
-            default:
-                err = new Error(`Unsupported pawn name type "${this.name.$.Class}"`);
-                break;
+          if(this.name.numerical && !(/\d/).test(this.name.name)){
+            this.name.name += ` ${num[0]}`;
+          }
+        } else {
+          err = new Error('Missing `name` property');
         }
-
-        callback(err);
+        break;
+      case 'NameTriple':
+        this.name.first = names.first || this.name.first;
+        this.name.nick = names.nick || this.name.nick;
+        this.name.last = names.last || this.name.last;
+        break;
+      default:
+        err = new Error(`Unsupported pawn name type "${this.name.$.Class}"`);
+        break;
     }
 
-    setSkill(name,level,options){
-        const filtered = {
-            xpSinceLastLevel: options.xpSinceLastLevel,
-            xpSinceMidnight: options.xpSinceMidnight,
-            passion: options.passion
-        };
+    callback(err);
+  }
 
-        const index = this.skills.skills.li.findIndex((item) => {
-            return item.def === name;
-        });
-        this.skills.skills.li[index] = Object.assign(this.skills.skills.li[index],{
-            level,
-            ...options
-        });
-    }
+  setSkill(name,level,options){
+    const filtered = {
+      xpSinceLastLevel: options.xpSinceLastLevel,
+      xpSinceMidnight: options.xpSinceMidnight,
+      passion: options.passion
+    };
 
-    /**
+    const index = this.skills.skills.li.findIndex((item) => {
+      return item.def === name;
+    });
+    this.skills.skills.li[index] = Object.assign(this.skills.skills.li[index],{
+      level,
+      ...options
+    });
+  }
+
+  /**
      * Set pawn's apparel item
      * @param {Object} options Set any option to null to remove it
      * @param {String|Null} [options.def]
@@ -81,29 +81,29 @@ class Pawn {
      * @param {String|Null} [options.pos]
      * @param {Function} callback
      */
-    setApparel(options,callback){
-        const id = options.id || null;
+  setApparel(options,callback){
+    const id = options.id || null;
 
-        const index = this.apparel.wornApparel.findIndex((apparel) => {
-            return apparel.id === id;
-        });
+    const index = this.apparel.wornApparel.findIndex((apparel) => {
+      return apparel.id === id;
+    });
 
-        if(index !== -1){
-            const item = this.apparel.wornApparel[index];
-            Object.keys(options).forEach((key) => {
-                const val = options[key];
-                if(val === null){
-                    delete item[key];
-                } else {
-                    item[key] = val;
-                }
-            });
+    if(index !== -1){
+      const item = this.apparel.wornApparel[index];
+      Object.keys(options).forEach((key) => {
+        const val = options[key];
+        if(val === null){
+          delete item[key];
         } else {
-            this.apparel.wornApparel.push(new Apparel(options));
+          item[key] = val;
         }
-
-        callback(null);
+      });
+    } else {
+      this.apparel.wornApparel.push(new Apparel(options));
     }
+
+    callback(null);
+  }
 }
 
 module.exports = Pawn;

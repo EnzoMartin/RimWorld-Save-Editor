@@ -43,11 +43,11 @@
     "singleton-class": "^1.0.4"
   },
   "devDependencies": {
-    "enzo-codestyle": "^3.0.0",
-    "eslint": "^3.2.2",
-    "expect": "^1.20.2",
+    "enzo-codestyle": "^4.3.0",
+    "eslint": "^4.10.0",
+    "expect": "^21.2.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
+    "mocha": "^4.0.1",
     "proxyquire": "^1.7.10"
   }
 }
