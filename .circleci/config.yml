@@ -20,9 +20,11 @@ jobs:
       - run:
           name: test
           command: npm run test:ci
+          environment:
+            MOCHA_FILE: junit/test-results.xml
           when: always
       - store_artifacts:
-          path: test-results.xml
+          path: ~/junit
           prefix: tests
           when: always
       - store_artifacts:
@@ -30,5 +32,5 @@ jobs:
           prefix: coverage
           when: always
       - store_test_results:
-          path: test-results.xml
+          path: ~/junit
           when: always
