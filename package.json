@@ -48,6 +48,7 @@
     "eslint": "^4.10.0",
     "expect": "^21.2.1",
     "mocha": "^4.0.1",
+    "mocha-junit-reporter": "^1.15.0",
     "nyc": "^11.3.0",
     "proxyquire": "^1.7.10"
   }
