@@ -31,9 +31,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "istanbul cover node_modules/mocha/bin/_mocha test/**/*.js -- --full-trace",
-    "test:watch": "node_modules/mocha/bin/_mocha --watch --full-trace",
-    "dev": "node app.js | bunyan -o short",
+    "test": "nyc mocha --full-trace --recursive",
+    "test:watch": "nyc mocha --full-trace --recursive -w",
+    "dev": "node app.js | bunyan -o short -color",
     "start": "node app.js"
   },
   "dependencies": {
@@ -46,8 +46,8 @@
     "enzo-codestyle": "^4.3.0",
     "eslint": "^4.10.0",
     "expect": "^21.2.1",
-    "istanbul": "^0.4.5",
     "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
     "proxyquire": "^1.7.10"
   }
 }

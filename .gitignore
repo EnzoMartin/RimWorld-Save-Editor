@@ -12,7 +12,5 @@ temp
 build/Release
 node_modules
 config/local.js
-
-.idea
-.DS_Store
 build
+.nyc_output
